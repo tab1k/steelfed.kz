@@ -28,5 +28,18 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  nginx:
+    image: nginx:latest
+    container_name: nginx_proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - django
+    volumes:
+      - ./src/staticfiles:/app/src/staticfiles
+      - ./src/media:/app/src/media
+
 volumes:
   postgres_data:

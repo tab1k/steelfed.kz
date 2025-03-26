@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-rm37^suwqza@#f_-rid8b$z-mc7ai-mw0*&#^11hoz*jgqnywa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['steelfed.kz', 'www.steelfed.kz', '*']
 
