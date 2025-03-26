@@ -1,0 +1,604 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ category.name }} {% endblock %}
+
+{% block header %}
+
+<header class="navbar-light header-sticky">
+    <div class="header-top container">
+      <span style="color: #262a31;">
+        <a style="color: black;" href="mailto:info@c-sp.kz">
+          <i class="fa-solid fa-envelope me-2"></i> info@c-sp.kz
+        </a>
+      </span>
+      <span>
+          <a style="color: #262a31;" type='tel' href="tel: +7 (708) 800 81 88">
+            <i class="fa-solid fa-phone me-2"></i> +7 (708) 800 81 88
+          </a>
+      </span>
+    </div>
+    <style>
+      .header-top {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 1200px; /* Или другой размер в зависимости от дизайна */
+        background-color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.875rem;
+        color: #666;
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid #e2e6ed;
+        z-index: 1050;
+      }
+
+
+    </style>
+    <!-- Logo Nav START -->
+    <nav class="navbar navbar-expand-xl">
+      <div class="container" style="margin-top: 30px;">
+        <!-- Logo START -->
+        <a class="navbar-brand" href="/">
+			<img class="light-mode-item navbar-brand-item" style="height: 45px; width: 150px;" src="{% static 'images/logo.png' %}" alt="logo">
+		</a>
+        <!-- Logo END -->
+  
+        <!-- Responsive navbar toggler -->
+        <button class="navbar-toggler ms-auto ms-sm-0 p-0 p-sm-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+          <span class="d-none d-sm-inline-block small"></span>
+        </button>
+  
+        <!-- Responsive category toggler -->
+        <button class="navbar-toggler ms-sm-auto mx-3 me-md-0 p-0 p-sm-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCategoryCollapse" aria-controls="navbarCategoryCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="bi bi-grid-3x3-gap-fill fa-fw"></i><span class="d-none d-sm-inline-block small"></span>
+        </button>
+  
+        <!-- Main navbar START -->
+        <div class="navbar-collapse collapse" id="navbarCollapse">
+          <div class="search-bar" style="position: relative; width: 100%;">
+            <input type="text" id="search-input" style="border-radius: 7px; border: 1px solid #e2e6ed; color: #262a31; padding: 8px 40px 8px 8px; width: 440px;" placeholder="Поиск в каталоге...">
+            <ul id="search-results" style="position: absolute; width: 100%; max-height: 200px; overflow-y: auto; z-index: 10; display: none; list-style: none; padding: 0; margin: 0;  background-color: white;"></ul>
+        </div>
+
+        <script>
+          document.getElementById('search-input').addEventListener('input', function() {
+              const query = this.value.trim();
+              const resultsContainer = document.getElementById('search-results');
+
+              if (query.length > 0) {  // Начинать поиск, если введено более 1 символа
+                  fetch(`/search/?query=${encodeURIComponent(query)}`)
+                      .then(response => response.json())
+                      .then(data => {
+                          resultsContainer.innerHTML = '';  // Очистить текущие результаты
+                          if (data.results.length > 0) {
+                              resultsContainer.style.display = 'block';  // Показать результаты
+                              data.results.forEach(result => {
+                                  const li = document.createElement('li');
+                                  li.style.padding = '8px';
+                                  li.style.borderBottom = '1px solid #e2e6ed';
+                                  if (result.type === 'product') {
+                                      // Если это продукт
+                                      li.innerHTML = `
+                                          <a href="/product/${result.slug}" style="color: #262a31; text-decoration: none;">
+                                               ${result.name}
+                                          </a>`;
+                                  } else if (result.type === 'category') {
+                                      // Если это категория
+                                      li.innerHTML = `
+                                          <a href="/category/${result.slug}" style="color: #262a31; text-decoration: none;">
+                                               ${result.name}
+                                          </a>`;
+                                  } else if (result.type === 'none') {
+                                      // Если ничего не найдено
+                                      li.innerHTML = `
+                                          <span style="color: #262a31;">${result.name}</span>`;
+                                  }
+                                  resultsContainer.appendChild(li);
+                              });
+                          } else {
+                              resultsContainer.style.display = 'none';  // Скрыть, если нет результатов
+                          }
+                      })
+                      .catch(error => {
+                          console.error('Ошибка загрузки данных:', error);
+                          resultsContainer.style.display = 'none';  // Скрыть, если произошла ошибка
+                      });
+              } else {
+                  resultsContainer.style.display = 'none';  // Скрыть результаты, если менее 2 символов
+              }
+          });
+      </script>
+        
+        </div>
+        <!-- Main navbar END -->
+  
+        <!-- Nav category menu START -->
+        <div class="navbar-collapse collapse" id="navbarCategoryCollapse">
+          <ul class="navbar-nav navbar-nav-scroll nav-pills-primary-soft text-center ms-auto p-2 p-xl-0">
+
+            <li class="nav-item d-lg-none"> 
+              <a class="nav-link active" href="{% url 'main:category' %}">
+                  <i class="fa-solid fa-store me-2"></i>Каталог
+              </a>
+            </li>
+          
+          
+
+            <hr style="margin: 5px;">
+
+            <!-- Nav item Hotel -->
+            <li class="nav-item"> 
+              <a class="nav-link " href="/">
+                <i class="fa-solid fa-house me-2"></i>Главная
+              </a>
+            </li>
+            
+            <!-- Nav item Services -->
+            <li class="nav-item"> 
+              <a class="nav-link" href="{% url 'main:services' %}">
+                <i class="fa-solid fa-gavel me-2"></i>Услуги
+              </a>
+            </li>
+            
+            <!-- Nav item Contacts -->
+            <li class="nav-item"> 
+              <a class="nav-link" href="{% url 'main:contacts' %}">
+                <i class="fa-solid fa-phone me-2"></i>Контакты
+              </a>
+            </li>
+            
+            <!-- Nav item About -->
+            <li class="nav-item"> 
+              <a class="nav-link" href="{% url 'main:about' %}">
+                <i class="fa-solid fa-info-circle me-2"></i>О компании
+              </a>
+            </li>
+
+            
+            
+          </ul>
+        </div>
+        <!-- Nav category menu END -->
+  
+      </div>
+    </nav>
+    <!-- Logo Nav END -->
+  </header>
+
+{% endblock %}
+
+{% block content %}
+<section class="pt-0">
+	<div class="container">
+		<!-- Tabs and alert START -->
+		<div class="row">
+			<div class="bread-crumbs">
+				<div class="">
+					<ul class="bread-crumbs__list" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+						
+						
+						<li class="bread-crumbs__item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+							<a class="bread-crumbs__link" href="/" itemprop="item">
+								  <span itemprop="name">
+									  Главная
+								  </span>
+							</a>
+							<meta itemprop="position" content="1">
+						</li>
+						
+						
+						
+						<li class="bread-crumbs__item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+							<a class="bread-crumbs__link" href="{{ category.get_absolute_url }}" itemprop="item">
+								  <span itemprop="name">
+									{{ category.name.upper }}
+								  </span>
+							</a>
+							<meta itemprop="position" content="2">
+						</li>
+						
+						
+						
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+
+			<style>
+				.bread-crumbs__list {
+					display: flex;
+					flex-wrap: wrap;
+					margin: 0;
+				
+					margin-bottom: 8px;
+					padding: 0;
+					list-style-type: none;
+				}
+				.bread-crumbs__item {
+					display: flex;
+					align-items: center;
+					margin-bottom: 8px;
+				}
+				.bread-crumbs__link {
+					color: #999;
+					font-weight: 700;
+					font-size: 12px;
+					text-transform: uppercase;
+					letter-spacing: .01em;
+				}
+
+				.bread-crumbs__item::after {
+					content: url('{% static 'images/tech/rigth.svg' %}');
+					display: flex;
+					align-items: center;
+					margin: 0 9px;
+					width: 7px;
+					height: 10px;
+					color: #d3d6db;
+				}
+			</style>
+
+			<div class="col-12">
+				<h3 style="color: #262a31; margin-bottom: 0px;">{{ category.name.upper }}<h3>
+			</div>
+		</div>
+		<!-- Tabs and alert END -->
+
+         <!-- БЛОК Дополнительно -->
+
+        <div class="container mb-3 mt-1 p-0">
+            <div class="categories">
+            <div class="category">
+                <img src="{% static 'images/tech/kabel.png' %}" alt="Доставка" />
+                <span>Кабель</span>
+            </div>
+    
+            <div class="category">
+                <img src="{% static 'images/tech/truba.webp' %}" alt="Бургеры" />
+                <span>Труба круглая стальная</span>
+            </div>
+    
+            <div class="category">
+                <img src="{% static 'images/tech/listy.webp' %}" alt="Пицца" />
+                <span>Листы</span>
+            </div>
+    
+            <div class="category">
+                <img src="{% static 'images/tech/kabel.png' %}" alt="Доставка" />
+                <span>Кабель</span>
+            </div>
+            <div class="category">
+                <img src="{% static 'images/tech/truba.webp' %}" alt="Бургеры" />
+                <span>Труба круглая стальная</span>
+            </div>
+            <div class="category">
+                <img src="{% static 'images/tech/listy.webp' %}" alt="Пицца" />
+                <span>Листы</span>
+            </div>
+            <div class="category">
+                <img src="{% static 'images/tech/polosy.webp' %}" alt="Суши" />
+                <span>Стальные полосы</span>
+            </div>
+            <div class="category">
+                <img src="{% static 'images/tech/truba.webp' %}" alt="Бургеры" />
+                <span>Труба круглая стальная</span>
+            </div>
+    
+            <div class="category">
+                <img src="{% static 'images/tech/listy.webp' %}" alt="Пицца" />
+                <span>Листы</span>
+            </div>
+    
+            <div class="category">
+                <img src="{% static 'images/tech/truba.webp' %}" alt="Бургеры" />
+                <span>Труба круглая стальная</span>
+            </div>
+            </div>
+        </div>
+  
+      <style>
+        .categories {
+          display: flex;
+          overflow-x: auto;
+          gap: 15px;
+          white-space: nowrap;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .categories::-webkit-scrollbar {
+          display: none;
+        }
+        .category {
+          flex: 0 0 auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 10px;
+          background: #f5f5f5;
+          border-radius: 10px;
+          text-align: center;
+          min-width: 80px;
+        }
+        .icon-wrapper {
+          width: 50px;
+          height: 50px;
+          background: #f5f5f5;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 5px;
+        }
+        .icon-wrapper svg {
+          width: 24px;
+          height: 24px;
+          fill: #333;
+        }
+        .category img {
+          width: 40px;
+          height: 40px;
+          margin-bottom: 5px;
+        }
+        .category span {
+          font-size: 14px;
+          color: #333;
+        }
+      </style>
+  
+      <!--  КОНЕЦ БЛОКА -->
+
+
+		<div class="row">
+			<!-- Left sidebar START -->
+			<aside class="col-xl-4 col-xxl-3">
+				<!-- Responsive offcanvas body START -->
+				<div class="offcanvas-xl offcanvas-end" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
+					<div class="offcanvas-header">
+						<h5 class="offcanvas-title" id="offcanvasSidebarLabel">Фильтр</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasSidebar" aria-label="Close"></button>
+					</div>
+					<div class="offcanvas-body flex-column p-3 p-xl-0">
+						<form class="rounded-3 shadow">
+							<!-- Hotel type START -->
+							<div class="card card-body rounded-0 rounded-top p-4">
+								<!-- Title -->
+								<h6 class="mb-3">Поиск</h6>
+								<!-- Hotel Type group -->
+								<div class="col-12">
+									<!-- Checkbox -->
+									<div class="form-check" style="padding-left: 0px;">
+										<form method="get" id="search-form">
+											<label class="search__label visible" style="outline: 1px solid #cacaca; border-radius: 7px; width: 100%;">
+												<input type="text" name="search" class="search__input filter-aside__search"
+													placeholder="32х4.5 мм P460N EN 10216-3..." autocomplete="off" style="border-radius: 7px; border: 1px solid #e2e6ed; color: #262a31; padding: 8px 40px 8px 8px; width: 100%;">
+											</label>
+										</form>
+									</div>
+									
+								</div>
+							</div>
+							<!-- Hotel type END -->
+
+							<hr class="my-0"> <!-- Divider -->
+
+			
+
+							<!-- Amenities START -->
+							<div class="card card-body rounded-0 rounded-bottom p-4">
+								<!-- Заголовок -->
+								<h6 class="mb-2">Города</h6>
+								<!-- Группа городов -->
+								<div class="col-12">
+									<!-- Checkbox -->
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="" id="cityAll">
+										<label class="form-check-label" for="cityAll">Все</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="" id="city1">
+										<label class="form-check-label" for="city1">Астана</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="" id="city2">
+										<label class="form-check-label" for="city2">Алматы</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="" id="city3">
+										<label class="form-check-label" for="city3">Шымкент</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="" id="city4">
+										<label class="form-check-label" for="city4">Караганда</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="" id="city5">
+										<label class="form-check-label" for="city5">Актобе</label>
+									</div>
+							
+									<!-- Скрытые города -->
+									<div class="multi-collapse collapse" id="citiesCollapse">
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value="" id="city6">
+											<label class="form-check-label" for="city6">Тараз</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value="" id="city7">
+											<label class="form-check-label" for="city7">Павлодар</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value="" id="city8">
+											<label class="form-check-label" for="city8">Усть-Каменогорск</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value="" id="city9">
+											<label class="form-check-label" for="city9">Костанай</label>
+										</div>
+									</div>
+									
+									<!-- Кнопка для раскрытия списка -->
+									<a style="color: #032655;" class="p-0 mb-0 mt-2 btn-more d-flex align-items-center collapsed" data-bs-toggle="collapse" href="#citiesCollapse" role="button" aria-expanded="false" aria-controls="citiesCollapse">
+										Показать <span class="see-more ms-1">больше</span><span class="see-less ms-1">меньше</span>
+										<i class="fa-solid fa-angle-down ms-2"></i>
+									</a>
+								</div>
+							</div>
+
+							
+							
+							<!-- Amenities END -->
+						</form><!-- Form End -->
+					</div>
+				
+				</div>
+				<!-- Responsive offcanvas body END -->
+			</aside>
+			<!-- Left sidebar END -->
+			
+			<!-- Main content START -->
+			<div class="col-xl-8 col-xxl-9">
+				<div class="hstack gap-3 justify-content-between justify-content-md-end">
+					<!-- Filter offcanvas button -->
+					<button class="btn btn-primary-check mb-0 d-xl-none w-100" style="background-color: #f5f5f5; color: black;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+						<i class="fa-solid fa-sliders-h me-1"></i> Фильтры
+					</button>
+					<!-- tabs -->
+				</div>
+                <div class="product-control__found mb-3 mt-3">Найдено <span
+                    id="product-count">{{ products.count }}</span> товаров.
+                </div>
+				<div class="vstack " id="listing-table-target">
+                    {% for product in products %}
+					<div class="alert" style="border: 1px solid #e3e5e8; background-color: white; margin-bottom: 5px;">
+                        <a href="{{ product.get_absolute_url }}">
+                            <div class="product-info" style="justify-content: space-between;">
+                                <div class="d-flex" style="align-items: center;">
+									<img class="product-logo" src="{% static 'images/tech/truba.webp' %}">
+                                	<div class="product-name" style="margin-left: 10px;"><p style="margin: 0;">{{ product.name }}</p></div>
+								</div>
+                                <button class="btn btn-sm btn-primary mb-0" style="background-color: #f5f5f5; border: 1px solid #e3e5e8; color: #262a31;">Купить</button>
+                            </div>
+                        </a>
+                    </div>
+                    {% empty %}
+                        <p>Ничего не нашлось</p>
+                    {% endfor %}
+            
+
+                    <style>
+                        .product-info {
+							display: flex;
+							align-items: center;
+							gap: 15px;
+						}
+
+						.product-logo {
+							width: 50px;
+							height: 50px;
+							
+							color: white;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							font-size: 20px;
+							font-weight: bold;
+							border-radius: 10px;
+						}
+
+						.product-name {
+							font-size: 14px;
+							font-weight: 600;
+							color: #333;
+						}
+	
+                    </style>
+
+					<script>
+						document.addEventListener("DOMContentLoaded", function () {
+							const searchInput = document.querySelector("input[name='search']");
+							const resultsContainer = document.getElementById("listing-table-target");
+							const productCount = document.getElementById("product-count");
+					
+							if (searchInput) {
+								searchInput.addEventListener("input", function () {
+									const query = searchInput.value.trim();
+									const url = new URL(window.location.href);
+									url.searchParams.set("search", query);
+					
+									// AJAX-запрос без перезагрузки страницы
+									fetch(url, { method: "GET", headers: { "X-Requested-With": "XMLHttpRequest" } })
+										.then(response => response.text())
+										.then(data => {
+											const parser = new DOMParser();
+											const newDocument = parser.parseFromString(data, "text/html");
+											const newResults = newDocument.querySelector("#listing-table-target")?.innerHTML || "";
+											const newCount = newDocument.querySelector("#product-count")?.textContent || "0";
+					
+											resultsContainer.innerHTML = newResults;
+											productCount.textContent = newCount;
+										})
+										.catch(error => console.error("Ошибка при загрузке товаров:", error));
+								});
+							}
+						});
+					</script>
+
+
+                    
+
+					<!-- Pagination -->
+					<nav class="d-flex justify-content-center" aria-label="navigation">
+						<ul class="pagination pagination-primary-soft d-inline-block d-md-flex rounded mb-0">
+							{% if page_obj.has_previous %}
+								<li class="page-item mb-0">
+									<a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+										<i class="fa-solid fa-angle-left"></i>
+									</a>
+								</li>
+							{% endif %}
+					
+							{% for page in page_range %}
+								{% if page == page_obj.number %}
+									<li class="page-item mb-0 active">
+										<a class="page-link" href="#">{{ page }}</a>
+									</li>
+								{% else %}
+									<li class="page-item mb-0">
+										<a class="page-link" href="?page={{ page }}">{{ page }}</a>
+									</li>
+								{% endif %}
+							{% endfor %}
+					
+							{% if page_obj.has_next %}
+								<li class="page-item mb-0">
+									<a class="page-link" href="?page={{ page_obj.next_page_number }}">
+										<i class="fa-solid fa-angle-right"></i>
+									</a>
+								</li>
+							{% endif %}
+						</ul>
+					</nav>
+
+					<style>
+						.pagination-primary-soft .page-item.page-item.active .page-link {
+							color: #fff;
+							background-color: #032655;
+						}
+					</style>
+					
+
+				</div>
+			</div>
+			<!-- Main content END -->
+		</div> <!-- Row END -->
+	</div>
+</section>
+{% endblock %}

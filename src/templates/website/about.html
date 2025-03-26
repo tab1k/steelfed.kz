@@ -1,0 +1,377 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} О компании {% endblock %}
+
+{% block header %}
+
+<header class="navbar-light header-sticky">
+    <div class="header-top container">
+      <span style="color: #262a31;">
+        <a style="color: black;" href="mailto:info@c-sp.kz">
+          <i class="fa-solid fa-envelope me-2"></i> info@c-sp.kz
+        </a>
+      </span>
+      <span>
+          <a style="color: #262a31;" type='tel' href="tel: +7 (708) 800 81 88">
+            <i class="fa-solid fa-phone me-2"></i> +7 (708) 800 81 88
+          </a>
+      </span>
+    </div>
+    <style>
+      .header-top {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 1200px; /* Или другой размер в зависимости от дизайна */
+        background-color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.875rem;
+        color: #666;
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid #e2e6ed;
+        z-index: 1050;
+      }
+
+
+    </style>
+    <!-- Logo Nav START -->
+    <nav class="navbar navbar-expand-xl">
+      <div class="container" style="margin-top: 30px;">
+        <!-- Logo START -->
+        <a class="navbar-brand" href="/">
+          <img class="light-mode-item navbar-brand-item" style="height: 45px; width: 150px;" src="{% static 'images/logo.png' %}" alt="logo">
+        </a>
+        <!-- Logo END -->
+  
+        <!-- Responsive navbar toggler -->
+        <button class="navbar-toggler ms-auto ms-sm-0 p-0 p-sm-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+          <span class="d-none d-sm-inline-block small"></span>
+        </button>
+  
+        <!-- Responsive category toggler -->
+        <button class="navbar-toggler ms-sm-auto mx-3 me-md-0 p-0 p-sm-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCategoryCollapse" aria-controls="navbarCategoryCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="bi bi-grid-3x3-gap-fill fa-fw"></i><span class="d-none d-sm-inline-block small"></span>
+        </button>
+  
+        <!-- Main navbar START -->
+        <div class="navbar-collapse collapse" id="navbarCollapse">
+          <div class="search-bar" style="position: relative; width: 100%;">
+            <input type="text" id="search-input" style="border-radius: 7px; border: 1px solid #e2e6ed; color: #262a31; padding: 8px 40px 8px 8px; width: 440px;" placeholder="Поиск в каталоге...">
+            <ul id="search-results" style="position: absolute; width: 100%; max-height: 200px; overflow-y: auto; z-index: 10; display: none; list-style: none; padding: 0; margin: 0;  background-color: white;"></ul>
+        </div>
+
+        <script>
+          document.getElementById('search-input').addEventListener('input', function() {
+              const query = this.value.trim();
+              const resultsContainer = document.getElementById('search-results');
+
+              if (query.length > 0) {  // Начинать поиск, если введено более 1 символа
+                  fetch(`/search/?query=${encodeURIComponent(query)}`)
+                      .then(response => response.json())
+                      .then(data => {
+                          resultsContainer.innerHTML = '';  // Очистить текущие результаты
+                          if (data.results.length > 0) {
+                              resultsContainer.style.display = 'block';  // Показать результаты
+                              data.results.forEach(result => {
+                                  const li = document.createElement('li');
+                                  li.style.padding = '8px';
+                                  li.style.borderBottom = '1px solid #e2e6ed';
+                                  if (result.type === 'product') {
+                                      // Если это продукт
+                                      li.innerHTML = `
+                                          <a href="/product/${result.slug}" style="color: #262a31; text-decoration: none;">
+                                               ${result.name}
+                                          </a>`;
+                                  } else if (result.type === 'category') {
+                                      // Если это категория
+                                      li.innerHTML = `
+                                          <a href="/category/${result.slug}" style="color: #262a31; text-decoration: none;">
+                                               ${result.name}
+                                          </a>`;
+                                  } else if (result.type === 'none') {
+                                      // Если ничего не найдено
+                                      li.innerHTML = `
+                                          <span style="color: #262a31;">${result.name}</span>`;
+                                  }
+                                  resultsContainer.appendChild(li);
+                              });
+                          } else {
+                              resultsContainer.style.display = 'none';  // Скрыть, если нет результатов
+                          }
+                      })
+                      .catch(error => {
+                          console.error('Ошибка загрузки данных:', error);
+                          resultsContainer.style.display = 'none';  // Скрыть, если произошла ошибка
+                      });
+              } else {
+                  resultsContainer.style.display = 'none';  // Скрыть результаты, если менее 2 символов
+              }
+          });
+      </script>
+        
+        </div>
+        <!-- Main navbar END -->
+  
+        <!-- Nav category menu START -->
+        <div class="navbar-collapse collapse" id="navbarCategoryCollapse">
+          <ul class="navbar-nav navbar-nav-scroll nav-pills-primary-soft text-center ms-auto p-2 p-xl-0">
+
+            <li class="nav-item d-lg-none"> 
+              <a class="nav-link active" href="{% url 'main:category' %}">
+                  <i class="fa-solid fa-store me-2"></i>Каталог
+              </a>
+            </li>
+          
+          
+
+            <hr style="margin: 5px;">
+
+            <!-- Nav item Hotel -->
+            <li class="nav-item"> 
+              <a class="nav-link " href="/">
+                <i class="fa-solid fa-house me-2"></i>Главная
+              </a>
+            </li>
+            
+            <!-- Nav item Services -->
+            <li class="nav-item"> 
+              <a class="nav-link" href="{% url 'main:services' %}">
+                <i class="fa-solid fa-gavel me-2"></i>Услуги
+              </a>
+            </li>
+            
+            <!-- Nav item Contacts -->
+            <li class="nav-item"> 
+              <a class="nav-link" href="{% url 'main:contacts' %}">
+                <i class="fa-solid fa-phone me-2"></i>Контакты
+              </a>
+            </li>
+            
+            <!-- Nav item About -->
+            <li class="nav-item"> 
+              <a class="nav-link" href="{% url 'main:about' %}">
+                <i class="fa-solid fa-info-circle me-2"></i>О компании
+              </a>
+            </li>
+
+            
+            
+          </ul>
+        </div>
+        <!-- Nav category menu END -->
+  
+      </div>
+    </nav>
+    <!-- Logo Nav END -->
+  </header>
+
+{% endblock %}
+
+{% block content %}
+<div class="container mt-1 mb-3">
+  <div class="hero">
+      <h1>О нашей компании</h1>
+      <p>Мы создаем инновационные решения для вашего успеха</p>
+  </div>
+</div>
+
+<style>
+  
+  .hero {
+      background: linear-gradient(135deg, #032655 30%, #0056b3 100%);
+      color: white;
+      padding: 60px 20px; /* Уменьшил отступы */
+      text-align: center;
+      border-radius: 15px;
+  }
+
+  .hero h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: white;
+  }
+
+  .hero p {
+      font-size: 1.1rem;
+  }
+
+  .card {
+      border: none;
+      transition: transform 0.3s ease-in-out;
+  }
+
+  .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Стили для мобильных устройств */
+  @media (max-width: 768px) {
+      .hero {
+          padding: 40px 15px; /* Еще меньше отступов на мобильных */
+      }
+      .hero h1 {
+          font-size: 2rem;
+      }
+      .hero p {
+          font-size: 1rem;
+      }
+  }
+</style>
+
+<section class="pt-0 pt-lg-4">
+	<div class="container">
+		<!-- Content START -->
+		<div class="row mb-4 mb-md-5">
+      <div class="col-md-10 mx-auto">
+          <h3 class="mb-4 fw-bold" style="color: black;">О нас</h3>
+          <p class="fw-bold">
+              ТОО "ЦЕНТР СТАЛЬНОГО ПРОКАТА "ЦСП" – надежный партнер в сфере комплексных поставок строительных, промышленных и транспортных материалов. 
+          </p>
+          <p>
+              Мы специализируемся на обеспечении качественной продукцией, необходимой для успешной реализации проектов в области строительства и промышленности.
+          </p>
+          <p>
+              Наша компания предлагает широкий ассортимент стального проката, металлоконструкций и сопутствующих материалов, отвечающих самым высоким стандартам качества. Мы работаем с проверенными производителями, что позволяет нам гарантировать надежность и долговечность нашей продукции.
+          </p>
+          <h4 class="mt-4">Почему выбирают нас?</h4>
+          <ul class="list-unstyled">
+              <li>✔ Широкий ассортимент продукции для строительства и промышленности.</li>
+              <li>✔ Индивидуальный подход к каждому клиенту.</li>
+              <li>✔ Оперативная доставка по всему региону.</li>
+              <li>✔ Конкурентные цены и гибкие условия сотрудничества.</li>
+              <li>✔ Профессиональная команда, готовая решать задачи любой сложности.</li>
+          </ul>
+          <p class="mt-4">
+              ТОО "ЦЕНТР СТАЛЬНОГО ПРОКАТА "ЦСП" – это ваш надежный партнер в строительстве и промышленности. Мы стремимся к долгосрочному сотрудничеству, предлагая только лучшее для вашего бизнеса.
+          </p>
+      </div>
+  </div>
+  
+		<!-- Content END -->
+
+	</div>
+  
+  <section class="pt-0">
+    <div class="container">
+      <!-- Title -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <h2 class="mb-0">Our Team</h2>
+        </div>
+      </div>
+  
+      <!-- Team START -->
+      <div class="row g-4">
+        <!-- Team item START -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card card-element-hover bg-transparent">
+            <div class="position-relative">
+              <!-- Image -->
+              <img src="assets/images/team/03.jpg" class="card-img" alt="">
+  
+              <div class="card-img-overlay hover-element d-flex p-3">
+                <!-- Category -->
+                <div class="btn-group mt-auto">
+                  <a href="#" class="btn btn-white mb-0"><i class="fa-brands fa-facebook-f text-facebook"></i></a>
+                  <a href="#" class="btn btn-white mb-0"><i class="fa-brands fa-instagram text-instagram"></i></a>
+                  <a href="#" class="btn btn-white mb-0"><i class="fa-brands fa-twitter text-twitter"></i></a>
+                </div>
+              </div>
+            </div>
+            <!-- Card body -->
+            <div class="card-body px-2 pb-0">
+              <h5 class="card-title"><a href="#">Larry Lawson</a></h5>
+              <span>Editor in Chief</span>
+            </div>
+          </div>
+        </div>
+        <!-- Team item END -->
+  
+        <!-- Team item START -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card card-element-hover bg-transparent">
+            <div class="position-relative">
+              <!-- Image -->
+              <img src="assets/images/team/04.jpg" class="card-img" alt="">
+  
+              <div class="card-img-overlay hover-element d-flex p-3">
+                <!-- Category -->
+                <div class="btn-group mt-auto">
+                  <a href="#" class="btn btn-white mb-0"><i class="fa-brands fa-facebook-f text-facebook"></i></a>
+                  <a href="#" class="btn btn-white mb-0"><i class="fa-brands fa-instagram text-instagram"></i></a>
+                  <a href="#" class="btn btn-white mb-0"><i class="fa-brands fa-twitter text-twitter"></i></a>
+                </div>
+              </div>
+            </div>
+            <!-- Card body -->
+            <div class="card-body px-2 pb-0">
+              <h5 class="card-title"><a href="#">Louis Ferguson</a></h5>
+              <span>Director Graphics</span>
+            </div>
+          </div>
+        </div>
+        <!-- Team item END -->
+  
+        <!-- Team item START -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card card-element-hover bg-transparent">
+            <div class="position-relative">
+              <!-- Image -->
+              <img src="assets/images/team/05.jpg" class="card-img" alt="">
+  
+              <div class="card-img-overlay hover-element d-flex p-3">
+                <!-- Category -->
+                <div class="btn-group mt-auto">
+                  <a href="#" class="btn btn-white mb-0"><i class="fa-brands fa-facebook-f text-facebook"></i></a>
+                  <a href="#" class="btn btn-white mb-0"><i class="fa-brands fa-instagram text-instagram"></i></a>
+                  <a href="#" class="btn btn-white mb-0"><i class="fa-brands fa-twitter text-twitter"></i></a>
+                </div>
+              </div>
+            </div>
+            <!-- Card body -->
+            <div class="card-body px-2 pb-0">
+              <h5 class="card-title"><a href="#">Louis Crawford</a></h5>
+              <span>Editor, Coverage</span>
+            </div>
+          </div>
+        </div>
+        <!-- Team item END -->
+  
+        <!-- Team item START -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card card-element-hover bg-transparent">
+            <div class="position-relative">
+              <!-- Image -->
+              <img src="assets/images/team/06.jpg" class="card-img" alt="">
+  
+              <div class="card-img-overlay hover-element d-flex p-3">
+                <!-- Category -->
+                <div class="btn-group mt-auto">
+                  <a href="#" class="btn btn-white mb-0"><i class="fa-brands fa-facebook-f text-facebook"></i></a>
+                  <a href="#" class="btn btn-white mb-0"><i class="fa-brands fa-instagram text-instagram"></i></a>
+                  <a href="#" class="btn btn-white mb-0"><i class="fa-brands fa-twitter text-twitter"></i></a>
+                </div>
+              </div>
+            </div>
+            <!-- Card body -->
+            <div class="card-body px-2 pb-0">
+              <h5 class="card-title"><a href="#">Frances Guerrero</a></h5>
+              <span>CEO, Coverage</span>
+            </div>
+          </div>
+        </div>
+        <!-- Team item END -->
+        
+      </div>
+      <!-- Team END -->
+    </div>
+  </section>
+{% endblock %}

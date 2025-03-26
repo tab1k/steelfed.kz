@@ -1,0 +1,30 @@
+# Исключаем виртуальное окружение
+venv/
+.env
+*.env
+
+# Исключаем файлы базы данных
+*.sqlite3
+db.sqlite3
+
+# Игнорируем файлы кеша и скомпилированные Python-файлы
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Игнорируем статику, собранную `collectstatic`
+staticfiles/
+media/
+
+# Игнорируем логи
+logs/
+*.log
+
+# Игнорируем файлы IDE
+.vscode/
+.idea/
+*.swp
+
+# Исключаем файлы, создаваемые Docker
+docker-compose.override.yml

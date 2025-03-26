@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}  {% endblock %}</title>
+
+    <!-- Meta Tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="author" content="c-sp.kz" />
+    <meta name="keywords" content="стальной прокат, металлопрокат Казахстан, ЦСП, металлоконструкции" />
+    <meta name="description" content="Центр стального проката ЦСП – металлопрокат в Казахстане. Широкий ассортимент стали и металлоконструкций по доступным ценам." />
+
+    <meta property="og:title" content="ЦСП – Центр стального проката" />
+    <meta property="og:description" content="Крупнейший поставщик стального проката в Казахстане." />
+    <meta property="og:image" content="https://steelfed.kz/static/images/logo.png" />
+    <meta property="og:url" content="https://steelfed.kz" />
+    <meta property="og:type" content="website" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://steelfed.kz/sitemap.xml" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'images/logo.png' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap" />
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/all.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-icons.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/tiny-slider.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/glightbox.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/flatpickr.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/choices.min.css' %}" />
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7-beta.29/jquery.inputmask.min.js"></script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "ЦСП",
+        "url": "https://steelfed.kz",
+        "logo": "https://steelfed.kz/static/images/logo.png",
+        "description": "Центр стального проката – металлопрокат в Казахстане.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Улица, дом",
+          "addressLocality": "Город",
+          "addressCountry": "KZ"
+        }
+      }
+      </script>
+      
+  </head>
+
+
+  <body>
+    <!-- Header START -->
+    {% block header %}
+
+    {% endblock %}
+    <!-- Header END -->
+
+    <!-- **************** MAIN CONTENT START **************** -->
+    {% block content %}
+
+    {% endblock %}
+    <!-- **************** MAIN CONTENT END **************** -->
+
+    <!-- ======================= Footer START -->
+
+
+    <footer class="bg-dark py-7" style="border-radius: 25px 25px 0px 0px;">
+      <div class="container">
+        <div class="row mx-auto">
+          <div class="col-lg-6 mx-auto text-center">
+            <!-- Logo -->
+            <img class="mx-auto h-60px" src="{% static 'images/logo.png' %}" style="filter: drop-shadow(0px 0px 12px white);" alt="logo" />
+
+            <p class="mt-3 text-white">ТОО "Центр Стального Проката" — ваш надежный партнер в сфере комплексных поставок строительных материалов. </p>
+            <!-- Links -->
+            <ul class="nav justify-content-between text-primary-hover mt-3 mt-md-0">
+              <li class="nav-item">
+                <a class="nav-link p-2 text-white" href="/">Главная</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 text-white" href="{% url 'main:category' %}">Каталог</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 text-white" href="{% url 'main:services' %}">Услуги</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 text-white" href="{% url 'main:contacts' %}">Контакты</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 text-white" href="{% url 'main:about' %}">О компании</a>
+              </li>
+              
+              
+            </ul>
+            <!-- Social media button -->
+            <ul class="list-inline mt-3 mb-0">
+              
+              <li class="list-inline-item">
+                <a class="btn btn-white btn-sm shadow px-2 text-instagram" href="#"><i class="fab fa-fw fa-instagram"></i></a>
+              </li>
+              
+            </ul>
+            <!-- copyright text -->
+            <div class="text-body-secondary text-primary-hover mt-3">
+              Copyrights ©2025 IT. Build by <a href="https://www.instagram.com/tab1kkz/" class="text-body-secondary">Tabigat Karbayev.</a>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      footer {
+        background: linear-gradient(to top, #032655, rgba(255, 255, 255, 0));
+        color: #032655; /* Задаем цвет текста */
+        padding: 20px;
+        text-align: center;
+        backdrop-filter: blur(10px); /* Добавляем размытие */
+        position: relative;
+      }
+    </style>
+    <!--   =======================
+Footer END   -->
+
+
+    <!-- Back to top -->
+    <div class="back-top" style="background-color: #032655;"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Vendors -->
+    <script src="{% static 'js/tiny-slider.js' %}"></script>
+    <script src="{% static 'js/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'js/glightbox.js' %}"></script>
+    <script src="{% static 'js/flatpickr.min.js' %}"></script>
+    <script src="{% static 'js/choices.min.js' %}"></script>
+    <script src="{% static 'js/jarallax.min.js' %}"></script>
+    <script src="{% static 'js/jarallax-video.min.js' %}"></script>
+
+    <!-- ThemeFunctions -->
+    <script src="{% static 'js/functions.js' %}"></script>
+  </body>
+</html>
