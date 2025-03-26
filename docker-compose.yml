@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  django:
+    build: .
+    container_name: django_app
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=website.settings
+    entrypoint: ["/app/docker-entrypoint.sh"]
+
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: steelfed_db
+      POSTGRES_USER: tab1k
+      POSTGRES_PASSWORD: TOBI8585
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
