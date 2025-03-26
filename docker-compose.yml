@@ -38,6 +38,7 @@ services:
     depends_on:
       - django
     volumes:
+      - ./src/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./src/staticfiles:/app/src/staticfiles
       - ./src/media:/app/src/media
 
