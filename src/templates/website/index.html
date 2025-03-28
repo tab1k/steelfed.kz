@@ -360,11 +360,12 @@
       <h4 class="about-company-bottom__title mb-4" style="color: #262a31;"><a href="{% url 'main:category' %}">Каталог</a></h4>
       <div class="grid">
         {% for category in categories|slice:':8' %}
-          <a href="{{ category.get_absolute_url }}">
-            <div class="grid-item {% if forloop.first %}big{% endif %}" style="background-image: url('{% static 'images/tech/chernyi.jpg' %}');">
-              <span>{{ category.name }}</span>
-            </div>
-          </a>
+            <a href="{{ category.get_absolute_url }}">
+                <div class="grid-item {% if forloop.first %}big{% endif %}" 
+                    style="background-image: url('{% if category.image %}{{ category.image.url }}{% else %}{% static 'images/tech/chernyi.jpg' %}{% endif %}');">
+                    <span>{{ category.name }}</span>
+                </div>
+            </a>
         {% endfor %}
       </div>
     </div>
