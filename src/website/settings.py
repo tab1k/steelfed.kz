@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-rm37^suwqza@#f_-rid8b$z-mc7ai-mw0*&#^11hoz*jgqnywa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['steelfed.kz', 'www.steelfed.kz', '*']
 
@@ -74,23 +74,24 @@ WSGI_APPLICATION = 'website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'steelfed_db',
-        'USER': 'tab1k',
-        'PASSWORD': 'TOBI8585',
-        'HOST': 'postgres',  # Должно совпадать с именем контейнера
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'steelfed_db',
+#         'USER': 'tab1k',
+#         'PASSWORD': 'TOBI8585',
+#         'HOST': 'postgres',  # Должно совпадать с именем контейнера
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation

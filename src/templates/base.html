@@ -8,10 +8,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="author" content="c-sp.kz" />
-    <meta name="keywords" content="стальной прокат, металлопрокат Казахстан, ЦСП, металлоконструкции" />
-    <meta name="description" content="Центр стального проката ЦСП – металлопрокат в Казахстане. Широкий ассортимент стали и металлоконструкций по доступным ценам." />
+    <meta name="keywords" content="Металлопрокат оптом, цены, наличие, стальной прокат, металлопрокат Казахстан, ЦСП, металлоконструкции" />
+    <meta name="description" content="Стальная Федерация – металлопрокат в Казахстане. Широкий ассортимент стали и металлоконструкций по доступным ценам." />
 
-    <meta property="og:title" content="ЦСП – Центр стального проката" />
+    <meta property="og:title" content="Стальная Федерация" />
     <meta property="og:description" content="Крупнейший поставщик стального проката в Казахстане." />
     <meta property="og:image" content="https://steelfed.kz/static/images/logo.png" />
     <meta property="og:url" content="https://steelfed.kz" />
@@ -40,23 +40,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7-beta.29/jquery.inputmask.min.js"></script>
-
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "ЦСП",
-        "url": "https://steelfed.kz",
-        "logo": "https://steelfed.kz/static/images/logo.png",
-        "description": "Центр стального проката – металлопрокат в Казахстане.",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Улица, дом",
-          "addressLocality": "Город",
-          "addressCountry": "KZ"
-        }
-      }
-      </script>
       
   </head>
 
@@ -77,30 +60,30 @@
     <!-- ======================= Footer START -->
 
 
-    <footer class="bg-dark py-7" style="border-radius: 25px 25px 0px 0px;">
+    <footer class="py-7" style="border-radius: 25px 25px 0px 0px;">
       <div class="container">
         <div class="row mx-auto">
           <div class="col-lg-6 mx-auto text-center">
             <!-- Logo -->
-            <img class="mx-auto h-60px" src="{% static 'images/logo.png' %}" style="filter: drop-shadow(0px 0px 12px white);" alt="logo" />
+            <img class="mx-auto h-50px mb-3" src="{% static 'images/logo.png' %}" style="filter: drop-shadow(0px 0px 12px white);" alt="logo" />
 
-            <p class="mt-3 text-white">ТОО "Центр Стального Проката" — ваш надежный партнер в сфере комплексных поставок строительных материалов. </p>
+            <p class="mt-3 text-black">ТОО "Стальная Федерация" — ваш надежный партнер в сфере комплексных поставок строительных материалов. </p>
             <!-- Links -->
             <ul class="nav justify-content-between text-primary-hover mt-3 mt-md-0">
               <li class="nav-item">
-                <a class="nav-link p-2 text-white" href="/">Главная</a>
+                <a class="nav-link p-2 text-black" href="/">Главная</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link p-2 text-white" href="{% url 'main:category' %}">Каталог</a>
+                <a class="nav-link p-2 text-black" href="{% url 'main:category' %}">Каталог</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link p-2 text-white" href="{% url 'main:services' %}">Услуги</a>
+                <a class="nav-link p-2 text-black" href="{% url 'main:services' %}">Услуги</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link p-2 text-white" href="{% url 'main:contacts' %}">Контакты</a>
+                <a class="nav-link p-2 text-black" href="{% url 'main:contacts' %}">Контакты</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link p-2 text-white" href="{% url 'main:about' %}">О компании</a>
+                <a class="nav-link p-2 text-black" href="{% url 'main:about' %}">О компании</a>
               </li>
               
               
@@ -114,8 +97,8 @@
               
             </ul>
             <!-- copyright text -->
-            <div class="text-body-secondary text-primary-hover mt-3">
-              Copyrights ©2025 IT. Build by <a href="https://www.instagram.com/tab1kkz/" class="text-body-secondary">Tabigat Karbayev.</a>.
+            <div class="text-primary-hover mt-3 " style="color: black;">
+              Copyrights ©2025 IT. Build by <a href="https://www.instagram.com/tab1kkz/" class="text-black">Tabigat Karbayev.</a>
             </div>
           </div>
         </div>
@@ -124,11 +107,11 @@
 
     <style>
       footer {
-        background: linear-gradient(to top, #032655, rgba(255, 255, 255, 0));
-        color: #032655; /* Задаем цвет текста */
+        background: linear-gradient(to top, gray, rgba(255, 255, 255, 0));
+        color: gray;
         padding: 20px;
         text-align: center;
-        backdrop-filter: blur(10px); /* Добавляем размытие */
+        backdrop-filter: blur(10px);
         position: relative;
       }
     </style>
