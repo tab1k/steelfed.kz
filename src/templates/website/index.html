@@ -6,99 +6,137 @@
 {% endblock %}
 
 {% block header %}
-  <header class="header-transparent sticky-top">
-    <script>
-      window.addEventListener('scroll', function () {
-        let header = document.querySelector('.header-transparent')
-        if (window.scrollY > 50) {
-          header.classList.add('header-scrolled')
-        } else {
-          header.classList.remove('header-scrolled')
-        }
-      })
-    </script>
-
-    <!-- Logo Nav START -->
-    <nav class="navbar navbar-dark navbar-expand-xl">
-      <div class="container">
-        <!-- Logo START -->
-        <a class="navbar-brand" href="/">
-          <img 
-            style="
-                  filter: drop-shadow(0px 0px 50px rgba(255, 255, 255, 1)) drop-shadow(0px 0px 100px rgba(255, 255, 255, 0.9)) drop-shadow(0px 0px 150px rgba(255, 255, 255, 0.9)); box-shadow: 0px 0px 80px 20px rgba(255, 255, 255, 0.9);}
-            " 
-            class="navbar-brand-item" 
-            src="{% static 'images/logo.png' %}" 
-            alt="logo" 
-          />
-        </a>
-        
-        
-        <!-- Logo END -->
-
-        <!-- Responsive navbar toggler -->
-        <button class="navbar-toggler ms-auto me-3 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-animation">
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
-        </button>
-
-        <!-- Main navbar START -->
-        <div class="navbar-collapse collapse" id="navbarCollapse">
-          <ul class="navbar-nav navbar-nav-scroll mx-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'main:category' %}">Каталог</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'main:index' %}">Главная</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'main:services' %}">Услуги</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'main:contacts' %}">Контакты</a>
-            </li>
-
-            <!-- Nav item Link -->
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'main:about' %}">О компании</a>
-            </li>
-
-          </ul>
-        </div>
-
-        <div class="nav flex-row ms-xl-auto d-none d-md-flex">
-          <button class="preorder-btn"><i class="bi bi-calendar-week me-2"></i>Предварительный заказ</button>
-
-          <style>
-            .preorder-btn {
-              background: gray;
-              border: 1px solid gray; /* Синий цвет границы */
-              color: white; /* Цвет текста */
-              font-size: 14px;
-              font-weight: 500;
-              padding: 10px 25px;
-              border-radius: 30px; /* Закругление */
-              cursor: pointer;
-              transition: all 0.3s ease;
-            }
-            
-            .preorder-btn:hover {
-              background: gray;
-              color: white;
-            }
-          </style>
-        </div>
-        <!-- Main navbar END -->
-      </div>
+<header class="custom-header">
+  <div class="container header-container">
+    <!-- Логотип -->
+    <a class="logo" href="/">
+      <img src="{% static 'images/logo.png' %}" alt="logo">
+    </a>
+    
+    <!-- Кнопка Каталог -->
+    <button class="catalog-btn">Каталог</button>
+    
+    <!-- Поле поиска -->
+    <div class="search-box">
+      <input type="text" placeholder="Поиск ...">
+    </div>
+    
+    <!-- Навигация -->
+    <nav class="nav-links">
+      <a href="/clients">Услуги</a>
+      <a href="/about">О компании</a>
+      <a href="/contacts">Контакты</a>
     </nav>
-    <!-- Logo Nav END -->
-  </header>
+    
+    <!-- Контактная информация -->
+    <div class="contact-info">
+      <div class="lang-switch">
+        <button>RU</button>
+        <button>KZ</button>
+      </div>
+      <div class="phone-email">
+        <p>+7 708 249 20 05</p>
+        <p>zakaz@roskaz-energo.kz</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .custom-header {
+    background: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 12px 20px;
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    max-width: 1300px;
+    border-radius: 16px;
+    z-index: 1000;
+  }
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1300px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+  .logo img {
+    height: 40px;
+  }
+  .catalog-btn {
+    background: gray;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .search-box input {
+    padding: 8px 15px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    outline: none;
+    width: 100%;
+    max-width: 250px;
+  }
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    margin: 5px 12px;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .contact-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .lang-switch button {
+    border: none;
+    background: #eee;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .phone-email p {
+    margin: 0;
+    font-size: 14px;
+    text-align: right;
+  }
+
+  @media (max-width: 768px) {
+    .custom-header {
+      width: 98%;
+      padding: 10px;
+    }
+    .header-container {
+      flex-direction: column;
+      align-items: center;
+    }
+    .nav-links {
+      justify-content: center;
+    }
+    .contact-info {
+      flex-direction: column;
+      text-align: center;
+    }
+    .search-box input {
+      max-width: 100%;
+    }
+  }
+</style>
+
+
 {% endblock %}
 
 {% block content %}
