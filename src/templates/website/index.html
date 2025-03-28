@@ -27,17 +27,17 @@
     
     <!-- Навигация -->
     <nav class="nav-links">
-      <a href="/clients">Услуги</a>
-      <a href="/about">О компании</a>
-      <a href="/contacts">Контакты</a>
+      <a href="{% url 'main:services' %}">Услуги</a>
+      <a href="{% url 'main:about' %}">О компании</a>
+      <a href="{% url 'main:about' %}">Контакты</a>
     </nav>
     
     <!-- Контактная информация -->
     <div class="contact-info">
     
       <div class="phone-email">
-        <h5>+7 (747) 562 05 16</p>
-        <p>zakaz@steelfed.kz</p>
+        <b style="color: black;">+7 (747) 562 05 16</b>
+        <p style="color: black;">zakaz@steelfed.kz</p>
       </div>
     </div>
   </div>
