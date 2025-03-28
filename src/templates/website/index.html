@@ -13,13 +13,18 @@
       <img src="{% static 'images/logo.png' %}" alt="logo">
     </a>
     
+    
     <!-- Кнопка Каталог -->
-    <button class="catalog-btn">Каталог</button>
+    <button onclick="window.location.href='{% url 'main:category' %}'" class="catalog-btn">
+      Каталог
+    </button>
+    
     
     <!-- Поле поиска -->
     <div class="search-box">
       <input type="text" placeholder="Поиск ...">
     </div>
+    
     
     <!-- Навигация -->
     <nav class="nav-links">
@@ -30,21 +35,67 @@
     
     <!-- Контактная информация -->
     <div class="contact-info">
-      <div class="lang-switch">
-        <button>RU</button>
-        <button>KZ</button>
-      </div>
+    
       <div class="phone-email">
-        <p>+7 708 249 20 05</p>
-        <p>zakaz@roskaz-energo.kz</p>
+        <h5>+7 (747) 562 05 16</p>
+        <p>zakaz@steelfed.kz</p>
       </div>
     </div>
   </div>
+
+  <button class="burger-menu" aria-label="Открыть меню" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </header>
 
 <style>
+  
+  .burger-menu {
+    display: none;
+    width: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    z-index: 1001;
+  }
+
+  /* Полоски бургер-меню */
+  .burger-menu span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #434040;
+    margin: 5px auto;
+    transition: 0.4s;
+  }
+
+  /* Анимация превращения в крестик */
+  .burger-menu.open span:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+  }
+
+  .burger-menu.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .burger-menu.open span:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+  }
+
+  /* Показываем кнопку только на мобильных */
+  @media (max-width: 991px) {
+    .burger-menu {
+      display: block;
+    }
+  }
+  
   .custom-header {
-    background: white;
+    background-color: #F2F0EC;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     padding: 12px 20px;
     position: fixed;
@@ -55,7 +106,9 @@
     max-width: 1300px;
     border-radius: 16px;
     z-index: 1000;
+    transition: top 0.3s ease-in-out; /* Плавное исчезновение */
   }
+  
   .header-container {
     display: flex;
     align-items: center;
@@ -81,8 +134,8 @@
     border-radius: 12px;
     border: 1px solid #ddd;
     outline: none;
-    width: 100%;
-    max-width: 250px;
+    width: 390px;
+    max-width: 390px;
   }
   .nav-links {
     display: flex;
@@ -115,10 +168,30 @@
   }
 
   @media (max-width: 768px) {
+
+    .container.header-container {
+      width: 50%;
+      margin: 0;
+    }
+  
     .custom-header {
       width: 98%;
       padding: 10px;
+      display: flex;
     }
+
+    button.catalog-btn {
+      display: none;
+    }
+
+    .search-box {
+      display: none;
+    }
+
+    nav.nav-links {
+      display: none;
+    }
+
     .header-container {
       flex-direction: column;
       align-items: center;
@@ -129,12 +202,26 @@
     .contact-info {
       flex-direction: column;
       text-align: center;
+      display: none;
     }
     .search-box input {
       max-width: 100%;
     }
   }
 </style>
+
+<script>
+  const header = document.querySelector(".custom-header");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 400) {
+      header.style.top = "-100px"; // Убираем хедер
+    } else {
+      header.style.top = "10px"; // Показываем хедер обратно
+    }
+  });
+</script>
+
 
 
 {% endblock %}
@@ -158,10 +245,8 @@
                         по всему 
               <span class="position-relative z-index-9 d-block">
                 Казахстану
-                <!-- SVG START -->
-            
               </span>
-            </h1>
+            </h2>
           </div>
 
           <!-- Search START -->
@@ -248,7 +333,7 @@
 
     <div class="marquee-container">
       <div class="marquee">
-        <span>🔥 Добро пожаловать на наш сайт! 🚀 Новые акции уже доступны! 🎉 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔥 Добро пожаловать на наш сайт! 🚀 Новые акции уже доступны! 🎉</span>
+        <span>🔥 Добро пожаловать на наш сайт! 🚀 Новые акции уже доступны! 🎉 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔥 Добро пожаловать на наш сайт! 🚀 Новые акции уже доступны! 🎉 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 🔥 Добро пожаловать на наш сайт! 🚀 Новые акции уже доступны! 🎉</span>
       </div>
     </div>
 
@@ -268,18 +353,18 @@
       .marquee {
         display: flex;
         width: 200%;
-        animation: marquee 10s linear infinite;
+        animation: marquee 11s linear infinite;
       }
-      
+    
       .marquee span {
         display: inline-block;
         width: 100%;
-        padding-right: 50px; /* Отступ между повторениями */
+        padding-right: 50px;
       }
-      
+    
       @keyframes marquee {
         from {
-          transform: translateX(0);
+          transform: translateX(50%);
         }
         to {
           transform: translateX(-50%);
