@@ -23,6 +23,15 @@
 							</a>
 							<meta itemprop="position" content="1">
 						</li>
+
+						<li class="bread-crumbs__item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+							<a class="bread-crumbs__link" href="{% url 'main:category' %}" itemprop="item">
+								  <span itemprop="name">
+									  Каталог
+								  </span>
+							</a>
+							<meta itemprop="position" content="1">
+						</li>
 						
 						
 						
@@ -88,51 +97,63 @@
 
         <div class="container mb-3 mt-1 p-0">
             <div class="categories">
-            <div class="category">
-                <img src="{% static 'images/tech/kabel.png' %}" alt="Доставка" />
-                <span>Кабель</span>
-            </div>
-    
+				
+			<a href="{% url 'main:services' %}">
+				<div class="category">
+					<img src="{% static 'images/tech/servicesss.png' %}" alt="Доставка" />
+					<span>Спектр услуг</span>
+				</div>
+			</a>
+
+			<a href="https://c-sp.kz/profnastil/products/">
+				<div class="category">
+					<img src="{% static 'images/tech/proff.png' %}" alt="Доставка" />
+					<span>Профнастил</span>
+				</div>
+			</a>
+			
+			<a href="https://c-sp.kz/besshovnye-stalnye-truby/products/">
+				<div class="category">
+					<img src="{% static 'images/tech/truba.webp' %}" alt="Бургеры" />
+					<span>Труба бесшовная</span>
+				</div>
+			</a>
+			
+			<a href="https://c-sp.kz/goryachekatanye-listy/products/">
+				<div class="category">
+					<img src="{% static 'images/tech/listy.webp' %}" alt="Пицца" />
+					<span>Лист горячекатаный</span>
+				</div>
+			</a>
+            
+			<a href="https://c-sp.kz/sendvich-paneli/products/">
+				<div class="category">
+					<img src="{% static 'images/tech/san.png' %}" alt="Бургеры" />
+					<span>Сэндвич панели</span>
+				</div>
+			</a>
+			
+			<a href="https://c-sp.kz/category/nerzhaveyushie-listy/">
+				<div class="category">
+					<img src="{% static 'images/tech/listy.webp' %}" alt="Пицца" />
+					<span>Лист нержавеющий</span>
+				</div>
+			</a>
+
+        
             <div class="category">
                 <img src="{% static 'images/tech/truba.webp' %}" alt="Бургеры" />
                 <span>Труба круглая стальная</span>
             </div>
+			
+			<a href="https://c-sp.kz/category/ploskiy-stalnoy-prokat/">
+				<div class="category">
+					<img src="{% static 'images/tech/listy.webp' %}" alt="Пицца" />
+					<span>Листы</span>
+				</div>
+			</a>
     
-            <div class="category">
-                <img src="{% static 'images/tech/listy.webp' %}" alt="Пицца" />
-                <span>Листы</span>
-            </div>
-    
-            <div class="category">
-                <img src="{% static 'images/tech/kabel.png' %}" alt="Доставка" />
-                <span>Кабель</span>
-            </div>
-            <div class="category">
-                <img src="{% static 'images/tech/truba.webp' %}" alt="Бургеры" />
-                <span>Труба круглая стальная</span>
-            </div>
-            <div class="category">
-                <img src="{% static 'images/tech/listy.webp' %}" alt="Пицца" />
-                <span>Листы</span>
-            </div>
-            <div class="category">
-                <img src="{% static 'images/tech/polosy.webp' %}" alt="Суши" />
-                <span>Стальные полосы</span>
-            </div>
-            <div class="category">
-                <img src="{% static 'images/tech/truba.webp' %}" alt="Бургеры" />
-                <span>Труба круглая стальная</span>
-            </div>
-    
-            <div class="category">
-                <img src="{% static 'images/tech/listy.webp' %}" alt="Пицца" />
-                <span>Листы</span>
-            </div>
-    
-            <div class="category">
-                <img src="{% static 'images/tech/truba.webp' %}" alt="Бургеры" />
-                <span>Труба круглая стальная</span>
-            </div>
+            
             </div>
         </div>
   
@@ -312,7 +333,7 @@
                         <a href="{{ product.get_absolute_url }}">
                             <div class="product-info" style="justify-content: space-between;">
                                 <div class="d-flex" style="align-items: center;">
-									<img class="product-logo" src="{% static 'images/tech/truba.webp' %}">
+									<img class="product-logo" src="{% if product.category.image %}{{ product.category.image.url }}{% else %}{% static 'images/tech/truba.webp' %}{% endif %}">
                                 	<div class="product-name" style="margin-left: 10px;"><p style="margin: 0;">{{ product.name }}</p></div>
 								</div>
                                 <button class="btn btn-sm btn-primary mb-0" style="background-color: #f5f5f5; border: 1px solid #e3e5e8; color: #262a31;">Купить</button>
@@ -345,10 +366,38 @@
 						}
 
 						.product-name {
+							display: flex;
+    						flex-wrap: wrap;
 							font-size: 14px;
 							font-weight: 600;
 							color: #333;
+							max-width: 100%;
+							word-break: break-word;
 						}
+
+						@media (max-width: 768px) {
+							.product-info {
+								display: flex;
+								align-items: center;
+								justify-content: space-between; /* Оставляем кнопку справа */
+								flex-wrap: nowrap; /* Запрещаем перенос кнопки */
+								gap: 10px;
+							}
+						
+							.product-name {
+								flex: 1; /* Заставляет название занимать максимум доступного места */
+								min-width: 0; /* Это важно для корректного сжатия */
+								max-width: 70%; /* Регулируем, чтобы кнопка оставалась справа */
+								word-break: break-word;
+							}
+						
+							.btn {
+								white-space: nowrap; /* Запрещает разрыв текста в кнопке */
+								flex-shrink: 0; /* Запрещает уменьшать кнопку */
+							}
+						}
+						
+						
 	
                     </style>
 

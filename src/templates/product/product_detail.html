@@ -4,7 +4,6 @@
 {% block title %} {{ product.name }} {% endblock %}
 
 
-
 {% block content %}
 <main>
         
@@ -20,6 +19,15 @@
                         <!-- Title -->
                         <div class="mb-2 mb-lg-0">
                             <h1 class="fs-2">{{ product.name.upper }} </h1>
+                            <style>
+                                h1.fs-2 {
+                                    word-break: break-word; /* Перенос длинных слов */
+                                    overflow-wrap: break-word;
+                                    white-space: normal; /* Разрешаем перенос строк */
+                                    max-width: 100%; /* Гарантируем, что заголовок не выйдет за пределы */
+                                }
+                                
+                            </style>
                             <!-- Location -->
                             <p class="fw-bold mb-0"><i class="bi bi-geo-alt me-2"></i>Казахстан, г.Алматы
                                 
@@ -39,7 +47,7 @@
                                     <li><a class="dropdown-item" href="#" id="share-facebook"><i class="fab fa-facebook-square me-2"></i>Facebook</a></li>
                                     <li><a class="dropdown-item" href="#" id="share-whatsapp"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a></li>
                                     <li><a class="dropdown-item" href="#" id="share-telegram"><i class="fab fa-telegram me-2"></i>Telegram</a></li>
-                                    <li><a class="dropdown-item" href="#" id="copy-link"><i class="fa-solid fa-copy me-2"></i>Copy link</a></li>
+                                    <li><a class="dropdown-item" href="#" id="copy-link"><i class="fa-solid fa-copy me-2"></i>Копировать</a></li>
                                 </ul>
                             </li>
                             
@@ -124,7 +132,7 @@
     
     
                                 <p class="mb-3"> {{ product.name }} поставляется со складов по всему Казахстану.
-                                    <br><br>Позвоните нам по телефону <a type='tel' href=''><b style="color: #032655;">+7 (747) 562 05 16 </b></a>, напишите нам на почту zakaz@steelfed.kz или оставьте заявку на сайте.
+                                    <br><br>Позвоните нам по телефону <a type='tel' href=''><b style="color: #032655;">+7 (708) 800 81 88 </b></a>, напишите нам на почту info@c-sp.kz или оставьте заявку на сайте.
                                 </p>
 
                                 <p class="mb-0">«Стальная Федерация»– ваш надежный поставщик металла.</p>
@@ -159,7 +167,7 @@
                                     <h4 class="card-title mb-0">Договорная</h4>
                                 </div>
                                 <div>
-                                    <h6 class="fw-normal mb-0">+7 (747) 562 05 16</h6>
+                                    <h6 class="fw-normal mb-0">+7 (708) 800 81 88</h6>
                                 </div>
 
                                 
@@ -178,8 +186,15 @@
                             </ul>
     
                             <p class="h6 fw-light mb-4"><i class="bi bi-arrow-right me-2"></i>Лучшее качество</p>
-    
-                            <a href="#" class="btn btn-lg mb-0" style="background-color: #032655; color: white;">Заявка в 1 клик!</a>
+
+
+                            <script data-b24-form="click/51/kppspk" data-skip-moving="true">
+                                (function(w,d,u){
+                                var s=d.createElement('script');s.async=true;s.src=u+'?'+(Date.now()/180000|0);
+                                var h=d.getElementsByTagName('script')[0];h.parentNode.insertBefore(s,h);
+                                })(window,document,'https://cdn-ru.bitrix24.kz/b17734044/crm/form/loader_51.js');
+                                </script>
+                            <a href="javascript:void(0);" data-b24-form="click/51/kppspk" class="btn btn-lg mb-0" style="background-color: gray; color: white;">Заявка в 1 клик!</a>
                         </div>
 
                         
