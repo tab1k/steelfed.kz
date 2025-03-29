@@ -41,8 +41,8 @@ services:
       - ./src/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./src/staticfiles:/app/src/staticfiles
       - ./src/media:/app/src/media
-      - /etc/letsencrypt/live/c-sp.kz:/etc/letsencrypt/live/steelfed.kz:ro  
-      - /etc/letsencrypt/archive/c-sp.kz:/etc/letsencrypt/archive/steelfed.kz:ro  
+      - /etc/letsencrypt/live/steelfed.kz:/etc/letsencrypt/live/steelfed.kz:ro  
+      - /etc/letsencrypt/archive/steelfed.kz:/etc/letsencrypt/archive/steelfed.kz:ro  
       - /var/www/certbot:/var/www/certbot
 
   certbot:
