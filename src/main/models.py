@@ -72,6 +72,25 @@ class Product(models.Model):
 class Service(models.Model):
     name = models.CharField(max_length=255, blank=False, null=False)
     image = models.ImageField(max_length=255, blank=False, null=False, verbose_name="Картинка услуг")
+    slug = models.SlugField(unique=True, verbose_name="Слаг", max_length=255, blank=True, null=True)
+    description = models.TextField(blank=True, verbose_name="Описание")
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.name)
+            slug = base_slug
+            counter = 1
+
+            while Product.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('website:services_detail', kwargs={'slug': self.slug})
     
     class Meta:
         verbose_name = "Услуга"
