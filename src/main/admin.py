@@ -30,4 +30,7 @@ class ProductAdmin(admin.ModelAdmin):
     ordering = ('name',)
     
 
-admin.site.register(Service)
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}  # Автоматическое заполнение
+    list_display = ("name", "slug")

@@ -81,7 +81,7 @@ class Service(models.Model):
             slug = base_slug
             counter = 1
 
-            while Product.objects.filter(slug=slug).exists():
+            while Service.objects.filter(slug=slug).exists():  # Исправлено с Product на Service
                 slug = f"{base_slug}-{counter}"
                 counter += 1
 
@@ -90,7 +90,7 @@ class Service(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('website:services_detail', kwargs={'slug': self.slug})
+        return reverse('main:services_detail', kwargs={'slug': self.slug})
     
     class Meta:
         verbose_name = "Услуга"
