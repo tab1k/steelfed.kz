@@ -303,12 +303,7 @@
       <div class="grid">
         {% for service in services|slice:':4' %}
           <a href="{% url 'main:services' %}">
-            <div class="grid-item"
-              style="background-image: url('{% if service.image %}
-                {{ service.image.url }}
-              {% else %}
-                {% static 'images/default-service.jpg' %}
-              {% endif %}');">
+            <div class="grid-item" style="background-image: url('{{ service.image.url }}');">
               <span>{{ service.name }}</span>
             </div>
           </a>
