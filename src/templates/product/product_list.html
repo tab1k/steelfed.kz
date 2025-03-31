@@ -95,49 +95,20 @@
 
          <!-- БЛОК Дополнительно -->
 
-        <div class="container mb-3 mt-1 p-0">
-            <div class="categories">
-				
-			
-			<a href="https://steelfed.kz/besshovnye-stalnye-truby/products/">
-				<div class="category">
-					<img src="{% static 'images/tech/truba.webp' %}" alt="Бургеры" />
-					<span>Труба бесшовная</span>
-				</div>
-			</a>
-			
-			<a href="https://steelfed.kz/goryachekatanye-listy/products/">
-				<div class="category">
-					<img src="{% static 'images/tech/listy.webp' %}" alt="Пицца" />
-					<span>Лист горячекатаный</span>
-				</div>
-			</a>
-            
-			
-			<a href="https://steelfed.kz/category/nerzhaveyushie-listy/">
-				<div class="category">
-					<img src="{% static 'images/tech/listy.webp' %}" alt="Пицца" />
-					<span>Лист нержавеющий</span>
-				</div>
-			</a>
-
-			<a href="https://steelfed.kz/truby-bolshogo-diametra/products/">
-				<div class="category">
-					<img src="{% static 'images/tech/truba.webp' %}" alt="Бургеры" />
-					<span>Трубы большого диаметра</span>
-				</div>
-			</a>
-			
-			<a href="https://steelfed.kz/category/ploskiy-stalnoy-prokat/">
-				<div class="category">
-					<img src="{% static 'images/tech/listy.webp' %}" alt="Пицца" />
-					<span>Листы</span>
-				</div>
-			</a>
-    
-            
-            </div>
-        </div>
+		 <div class="container mb-3 mt-1 p-0">
+			<div class="categories">
+				{% for category in similar_categories %}
+					<a href="{{ category.get_absolute_url }}">
+						<div class="category">
+							<img src="{% if category.image %}{{ category.image.url }}{% else %}{% static 'images/tech/default.jpg' %}{% endif %}" 
+								 alt="{{ category.name }}" />
+							<span>{{ category.name }}</span>
+						</div>
+					</a>
+				{% endfor %}
+			</div>
+		</div>
+		
   
       <style>
         .categories {

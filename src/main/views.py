@@ -188,7 +188,16 @@ class ProductListView(FilterView, ListView):
         category = get_object_or_404(Category, slug=slug)
         context['category'] = category
 
-        # Передаем форму фильтра в шаблон
+        # Формируем список "похожих" категорий
+        similar_categories = Category.objects.filter(parent=category.parent).exclude(id=category.id)
+        
+        if not similar_categories.exists() and category.parent:
+            # Если нет категорий с таким же родителем, берем подкатегории родителя
+            similar_categories = Category.objects.filter(parent=category.parent.parent).exclude(id=category.id) if category.parent.parent else None
+
+        context['similar_categories'] = similar_categories
+
+        # Фильтр товаров
         context['filter'] = ProductFilter(self.request.GET, queryset=self.get_queryset())
 
         # Пагинация
@@ -210,6 +219,7 @@ class ProductListView(FilterView, ListView):
         context['page_range'] = page_range
         context['current_page'] = current_page
         return context
+
 
 
 class ProductDetailView(DetailView):
