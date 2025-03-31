@@ -207,9 +207,7 @@
                 <!-- Image -->
                 <div class="w-100">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal">
-                        <div class="card card-grid-lg card-element-hover card-overlay-hover overflow-hidden" 
-                             style="height: 200px; background-image: url('{% if service.image %}{{ service.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}'); 
-                             background-position: center; background-size: cover;">
+                        <div class="card card-grid-lg card-element-hover card-overlay-hover overflow-hidden" style="height: 200px; background-image: url('{% if product.image %}{{ product.image.url }}{% elif product.category.image %}{{ product.category.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}'); background-position: center left; background-size: cover;">
                             <div class="hover-element position-absolute w-100 h-100">
                                 <i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
                             </div>
@@ -225,7 +223,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                                 </div>
                                 <div class="modal-body text-center">
-                                    <img src="{% if service.image %}{{ service.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}" 
+                                    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}" 
                                          alt="Изображение" class="img-fluid">
                                 </div>
                             </div>
