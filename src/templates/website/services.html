@@ -79,11 +79,11 @@
         <div class="grid">
             
           {% for service in services %}
-            <a href="#">
+            <a href="{{ service.get_absolute_url }}">
               <div class="grid-item" style="background-image: url('{% if service.image %}{{ service.image.url }}{% else %}{% static 'images/default-service.jpg' %}{% endif %}');">
                 <span>{{ service.name }}</span>
               </div>
-                </a>
+            </a>
           {% endfor %}
             
         </div>

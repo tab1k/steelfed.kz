@@ -9,15 +9,93 @@
         
     <!-- =======================
     Main Title START -->
-    <section class="py-0 pt-sm-5">
+    <section class="py-0 pt-sm-3">
         <div class="container position-relative">
             <!-- Title and button START -->
             <div class="row mb-3">
                 <div class="col-12">
                     <!-- Meta -->
                     <div class="d-lg-flex justify-content-lg-between mb-1">
+                        
                         <!-- Title -->
                         <div class="mb-2 mb-lg-0">
+                            <div class="bread-crumbs">
+                                <div class="">
+                                    <ul class="bread-crumbs__list" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+                                        
+                                        
+                                        <li class="bread-crumbs__item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                                            <a class="bread-crumbs__link" href="/" itemprop="item">
+                                                  <span itemprop="name">
+                                                      Главная
+                                                  </span>
+                                            </a>
+                                            <meta itemprop="position" content="1">
+                                        </li>
+                
+                                        <li class="bread-crumbs__item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                                            <a class="bread-crumbs__link" href="{% url 'main:category' %}" itemprop="item">
+                                                  <span itemprop="name">
+                                                      Каталог
+                                                  </span>
+                                            </a>
+                                            <meta itemprop="position" content="1">
+                                        </li>
+                                    
+                                        
+                                        <li class="bread-crumbs__item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                                            <a class="bread-crumbs__link" href="{{ product.get_absolute_url }}" itemprop="item">
+                                                  <span itemprop="name">
+                                                    {{ product.name.upper }}
+                                                  </span>
+                                            </a>
+                                            <meta itemprop="position" content="2">
+                                        </li>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                
+                            <style>
+                                .bread-crumbs__list {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    margin: 0;
+                                
+                                    margin-bottom: 8px;
+                                    padding: 0;
+                                    list-style-type: none;
+                                }
+                                .bread-crumbs__item {
+                                    display: flex;
+                                    align-items: center;
+                                    margin-bottom: 8px;
+                                }
+                                .bread-crumbs__link {
+                                    color: #999;
+                                    font-weight: 700;
+                                    font-size: 12px;
+                                    text-transform: uppercase;
+                                    letter-spacing: .01em;
+                                }
+                
+                                .bread-crumbs__item::after {
+                                    content: url('{% static 'images/tech/rigth.svg' %}');
+                                    display: flex;
+                                    align-items: center;
+                                    margin: 0 9px;
+                                    width: 7px;
+                                    height: 10px;
+                                    color: #d3d6db;
+                                }
+                            </style>
+
+                            
                             <h1 class="fs-2">{{ product.name.upper }} </h1>
                             <style>
                                 h1.fs-2 {
@@ -29,27 +107,63 @@
                                 
                             </style>
                             <!-- Location -->
-                            <p class="fw-bold mb-0"><i class="bi bi-geo-alt me-2"></i>Казахстан, г.Алматы
+                            
+                            <p class=" mb-0"><i class="bi bi-geo-alt me-2"></i>Казахстан, г.Алматы, пр-т. Райымбека 251Г
                                 
                             </p>
                         </div>
     
                         <!-- Buttons -->
                         <ul class="list-inline text-end">
+                            
                             <!-- Share icon -->
-                            <li class="list-inline-item dropdown">
-                                <!-- Share button -->
-                                <a href="#" class="btn btn-sm btn-light px-2" role="button" id="dropdownShare" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-fw fa-share-alt"></i>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <a class="link-back d-lg-none me-3" href="{% if category.parent %}{{ category.parent.get_absolute_url }}{% else %}{% url 'main:category' %}{% endif %}">
+                                    Назад
                                 </a>
-                                <!-- Dropdown button -->
-                                <ul class="dropdown-menu dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare">
-                                    <li><a class="dropdown-item" href="#" id="share-facebook"><i class="fab fa-facebook-square me-2"></i>Facebook</a></li>
-                                    <li><a class="dropdown-item" href="#" id="share-whatsapp"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a></li>
-                                    <li><a class="dropdown-item" href="#" id="share-telegram"><i class="fab fa-telegram me-2"></i>Telegram</a></li>
-                                    <li><a class="dropdown-item" href="#" id="copy-link"><i class="fa-solid fa-copy me-2"></i>Копировать</a></li>
-                                </ul>
-                            </li>
+                            
+                                <li class="list-inline-item dropdown">
+                                    <a href="#" class="btn btn-sm btn-light px-2 mb-0"  role="button" id="dropdownShare" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-fw fa-share-alt"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare">
+                                        <li><a class="dropdown-item" href="#" id="share-facebook"><i class="fab fa-facebook-square me-2"></i>Facebook</a></li>
+                                        <li><a class="dropdown-item" href="#" id="share-whatsapp"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a></li>
+                                        <li><a class="dropdown-item" href="#" id="share-telegram"><i class="fab fa-telegram me-2"></i>Telegram</a></li>
+                                        <li><a class="dropdown-item" href="#" id="copy-link"><i class="fa-solid fa-copy me-2"></i>Копировать</a></li>
+                                    </ul>
+                                </li>
+                            </div>
+
+                            <style>
+                                .link-back {
+                                display: inline-flex;
+                                align-items: center;
+                           
+                                padding: 8px 8px 6px;
+                                padding-left: 28px;
+                                color: #262a31;
+                                font-weight: 700;
+                                font-size: 12px;
+                                letter-spacing: .01em;
+                                text-transform: uppercase;
+                                background-color: #f5f7f8;
+                                border-radius: 8px;
+                                position: relative;
+                                line-height: 13px;
+                                }
+                                .link-back:before {
+                                    content: "";
+                                    position: absolute;
+                                    transform: translateY(-50%);
+                                    top: 50%;
+                                    left: 8px;
+                                    width: 16px;
+                                    height: 16px;
+                                    background: url('{% static 'images/tech/arrow-left.svg' %}');
+                                }
+                            </style>
+                            
                             
                             <script>
                                 document.addEventListener("DOMContentLoaded", function () {
@@ -92,16 +206,27 @@
             <div class="row g-2">
                 <!-- Image -->
                 <div class="w-100">
-                    <a data-glightbox="" data-gallery="gallery" href="{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal">
                         <div class="card card-grid-lg card-element-hover card-overlay-hover overflow-hidden" 
                              style="height: 200px; background-image:url('{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}'); 
                              background-position: center left; background-size: cover;">
-                            <!-- Card hover element -->
                             <div class="hover-element position-absolute w-100 h-100">
                                 <i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
                             </div>
                         </div>
                     </a>
+                    
+                    <!-- Модальное окно -->
+                    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body text-center">
+                                    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}" 
+                                         class="img-fluid" alt="Product Image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -147,12 +272,136 @@
     
                             </div>
                             <!-- Card body END -->
+
+                            <div class="card-body pt-0 p-0">
+                                <h5 class="fw-light mb-4">Наши преимущества:</h5>
+    
+    
+                                <ol class="list-group list-group-numbered">
+                                    <li class="list-group-item border-0 ps-0">
+                                        <b>Прямые контракты</b> с ведущими производителями металла и локальными поставщиками.
+                                    </li>
+                                    <li class="list-group-item border-0 ps-0">
+                                        <b>Конкурентные цены</b> благодаря высоким объемам закупок.
+                                    </li>
+                                    <li class="list-group-item border-0 ps-0">
+                                        Более <b>5 миллионов</b> позиций в ассортименте, быстрый подбор под любые задачи.
+                                    </li>
+                                    <li class="list-group-item border-0 ps-0">
+                                        <b>Сертифицированная продукция</b>, соответствующая всем отраслевым стандартам.
+                                    </li>
+                                    <li class="list-group-item border-0 ps-0">
+                                        Быстрая обработка заказов – <b>отклик в течение часа</b>.
+                                    </li>
+                                    <li class="list-group-item border-0 ps-0">
+                                        <b>Эксперты</b> в области металлопроката помогут подобрать оптимальное решение.
+                                    </li>
+                                    <li class="list-group-item border-0 ps-0">
+                                        <b>Склады</b> в ключевых городах Казахстана и Узбекистана.
+                                    </li>
+                                    <li class="list-group-item border-0 ps-0">
+                                        <b>Надежная логистика</b> – партнерство с крупными транспортными компаниями.
+                                    </li>
+                                </ol>
+
+                                <style>
+                                    li {
+                                        margin-bottom: 10px;
+                                    }
+                                </style>
+
+                                <div class="container">
+                                    <div class="product-content__block" id="delivery">
+                                        <h3 class="product-content__title mb-5 mt-3">Доставка</h3>
+                                        <div class="row gy-4">
+
+                                            <div class="col-12">
+                                                <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+                                                    <div class="flex-shrink-0 text-center">
+                                                        <img loading="lazy" src="{% static 'images/delivery2.webp' %}" alt="Доставка3" class="img-fluid" style="max-width: 100px;">
+                                                    </div>
+                                                    <div class="text-center text-md-start">
+                                                        <h5>Железнодорожная, авиа- и морская перевозка</h5>
+                                                        <p>Организуем доставку любыми доступными способами, включая таможенное оформление.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+                                                    <div class="flex-shrink-0 text-center">
+                                                        <img loading="lazy" src="{% static 'images/delivery.webp' %}" alt="Доставка" class="img-fluid" style="max-width: 100px;">
+                                                    </div>
+                                                    <div class="text-center text-md-start">
+                                                        <h5>Автоперевозки</h5>
+                                                        <p>Точные сроки и соблюдение всех технических требований благодаря проверенным логистическим партнерам.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="product-content__block" id="payment">
+                                        <h3 class="product-content__title mb-5 mt-5">Оплата</h3>
+
+                                        <div class="row gy-4">
+                                            <div class="col-12">
+                                                <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+                                                    <div class="flex-shrink-0 text-center">
+                                                        <img loading="lazy" src="{% static 'images/beznal.webp' %}" alt="Оплата" class="img-fluid" style="max-width: 80px;">
+                                                    </div>
+                                                    <div class="text-center text-md-start">
+                                                        <h5>Безналичный расчёт</h5>
+                                                        <p>Удобная оплата через банк или онлайн-кабинет, получение товара после подтверждения платежа.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+                                                    <div class="flex-shrink-0 text-center">
+                                                        <img loading="lazy" src="{% static 'images/udobstvo.webp' %}" alt="Гибкие условия" class="img-fluid" style="max-width: 80px;">
+                                                    </div>
+                                                    <div class="text-center text-md-start">
+                                                        <h5>Гибкие условия</h5>
+                                                        <p>Возможность отсрочки платежа для постоянных клиентов.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+                                                    <div class="flex-shrink-0 text-center">
+                                                        <img loading="lazy" src="{% static 'images/individ.webp' %}" alt="Индивидуальный подход" class="img-fluid" style="max-width: 80px;">
+                                                    </div>
+                                                    <div class="text-center text-md-start">
+                                                        <h5>Индивидуальный подход</h5>
+                                                        <p>Поможем подобрать удобный способ оплаты и рассчитаем стоимость доставки.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                                
+                                
+    
+                            </div>
                         </div>
                         <!-- About hotel START -->
 
+                        
+
                     </div>	
+                    
                 </div>
                 <!-- Content END -->
+
+                
     
                 <!-- Right side content START -->
                 <aside class="col-xl-5 order-xl-2">
@@ -203,6 +452,8 @@
                         
                     </div>	
                 </aside>
+
+                
                 <!-- Right side content END -->
             </div> <!-- Row END -->
         </div>

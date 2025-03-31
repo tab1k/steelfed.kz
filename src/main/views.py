@@ -123,6 +123,11 @@ class CategoryViewPage(TemplateView):
         )
 
         return context
+    
+class ServicesDetailView(DetailView):
+    model = Service
+    template_name = 'website/service_detail.html'
+    context_object_name = 'service'
 
 
 class CategoryDetailView(DetailView):

@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ service.name }} {% endblock %}
+
+
+{% block content %}
+<main>
+        
+    <!-- =======================
+    Main Title START -->
+    <section class="py-0 pt-sm-5">
+        <div class="container position-relative">
+            <!-- Title and button START -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <!-- Meta -->
+                    <div class="d-lg-flex justify-content-lg-between mb-1">
+                        <!-- Title -->
+                        <div class="mb-2 mb-lg-0">
+                            <h1 class="fs-2">{{ service.name.upper }} </h1>
+                            <!-- Location -->
+                            <p class="fw-bold mb-0"><i class="bi bi-geo-alt me-2"></i>Казахстан, г.Алматы
+                                
+                            </p>
+                        </div>
+    
+                        <!-- Buttons -->
+                        <ul class="list-inline text-end">
+                            <!-- Share icon -->
+                            <li class="list-inline-item dropdown">
+                                <!-- Share button -->
+                                <a href="#" class="btn btn-sm btn-light px-2" role="button" id="dropdownShare" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-fw fa-share-alt"></i>
+                                </a>
+                                <!-- Dropdown button -->
+                                <ul class="dropdown-menu dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare">
+                                    <li><a class="dropdown-item" href="#" id="share-facebook"><i class="fab fa-facebook-square me-2"></i>Facebook</a></li>
+                                    <li><a class="dropdown-item" href="#" id="share-whatsapp"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a></li>
+                                    <li><a class="dropdown-item" href="#" id="share-telegram"><i class="fab fa-telegram me-2"></i>Telegram</a></li>
+                                    <li><a class="dropdown-item" href="#" id="copy-link"><i class="fa-solid fa-copy me-2"></i>Копировать</a></li>
+                                </ul>
+                            </li>
+                            
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    const pageUrl = encodeURIComponent(window.location.href);
+                                    const pageTitle = encodeURIComponent(document.title);
+                            
+                                    document.getElementById("share-facebook").setAttribute("href", `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`);
+                                    document.getElementById("share-whatsapp").setAttribute("href", `https://wa.me/?text=${pageTitle}%20${pageUrl}`);
+                                    document.getElementById("share-telegram").setAttribute("href", `https://t.me/share/url?url=${pageUrl}&text=${pageTitle}`);
+                            
+                                    document.getElementById("copy-link").addEventListener("click", function (e) {
+                                        e.preventDefault();
+                                        navigator.clipboard.writeText(window.location.href).then(() => {
+                                            alert("Ссылка скопирована!");
+                                        }).catch(err => {
+                                            console.error("Ошибка копирования: ", err);
+                                        });
+                                    });
+                                });
+                            </script>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Title and button END -->
+    
+            <!-- Alert box START -->
+            
+            <!-- Alert box END -->
+        </div>
+    </section>
+    <!-- =======================
+    Main Title END -->
+    
+    <!-- =======================
+    Image gallery START -->
+    <section class="card-grid pt-0">
+        <div class="container">
+            <div class="row g-2">
+                <!-- Image -->
+                <div class="w-100">
+                    <a data-glightbox="" data-gallery="gallery" href="{% if service.image %}{{ service.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}">
+                        <div class="card card-grid-lg card-element-hover card-overlay-hover overflow-hidden" 
+                             style="height: 200px; background-image:url('{% if service.image %}{{ service.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}'); 
+                             background-position: center left; background-size: cover;">
+                            <!-- Card hover element -->
+                            <div class="hover-element position-absolute w-100 h-100">
+                                <i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =======================
+    Image gallery END -->
+    
+    <!-- =======================
+    About hotel START -->
+    <section class="pt-0">
+        <div class="container" data-sticky-container="">
+    
+            <div class="row g-4 g-xl-5">
+                <!-- Content START -->
+                <div class="col-xl-7 order-1">
+                    <div class="vstack gap-5">
+    
+                        <!-- About hotel START -->
+                        <div class="card bg-transparent">
+                            <!-- Card header -->
+                            <div class="card-header border-bottom bg-transparent px-0 pt-0">
+                                <h3 class="mb-0">Об услуге</h3>
+                            </div>
+    
+                            <!-- Card body START -->
+                            <div class="card-body pt-4 p-0">
+                                <h5 class="fw-light mb-4">{{ service.name }}</h5>
+    
+    
+                                <p class="mb-3">
+                                    {{ service.description|safe }}
+                                </p>
+
+                                
+    
+                            </div>
+                            <!-- Card body END -->
+                        </div>
+                        <!-- About hotel START -->
+
+                    </div>	
+                </div>
+                <!-- Content END -->
+    
+                <!-- Right side content START -->
+                <aside class="col-xl-5 order-xl-2">
+                    <div data-sticky="" data-margin-top="100" data-sticky-for="1199">
+                        <!-- Book now START -->
+                        <div class="card card-body border">
+                            
+                            <!-- Title -->
+                            <div class="d-sm-flex justify-content-sm-between align-items-center mb-3">
+                                <div>
+                                    <span>Цена</span>
+                                    <h4 class="card-title mb-0">Договорная</h4>
+                                </div>
+                                <div>
+                                    <h6 class="fw-normal mb-0">+7 (747) 562 05 16</h6>
+                                </div>
+
+                                
+                            </div>		
+
+                            
+    
+                            <!-- Rating -->
+                            <ul class="list-inline mb-2">
+                                <li class="list-inline-item me-1 h6 fw-light mb-0"><i class="bi bi-arrow-right me-2"></i>5</li>
+                                <li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
+                                <li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
+                                <li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
+                                <li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
+                                <li class="list-inline-item me-0 small"><i class="fa-solid fa-star text-warning"></i></li>
+                            </ul>
+    
+                            <p class="h6 fw-light mb-4"><i class="bi bi-arrow-right me-2"></i>Лучшее качество</p>
+    
+                            <a data-bs-toggle="modal" data-bs-target="#LeadModal" class="btn btn-lg mb-0" style="background-color: gray; color: white;">Заявка в 1 клик!</a>
+                        </div>
+
+                        
+                        <!-- Book now END -->
+    
+                        
+                    </div>	
+                </aside>
+                <!-- Right side content END -->
+            </div> <!-- Row END -->
+        </div>
+    </section>
+    <!-- =======================
+    About hotel END -->
+    
+    </main>
+{% endblock %}
