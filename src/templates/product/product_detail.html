@@ -223,8 +223,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                                 </div>
                                 <div class="modal-body text-center">
-                                    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}" 
-                                         alt="Изображение" class="img-fluid">
+                                    <img src="{% if product.image %}{{ product.image.url }}{% elif product.category.image %}{{ product.category.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}" alt="Изображение" class="img-fluid">
                                 </div>
                             </div>
                         </div>
