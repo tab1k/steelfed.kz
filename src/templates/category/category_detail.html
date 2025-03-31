@@ -127,9 +127,10 @@
                                 <ul class="category-list">
                                     {% for category in categories %}
                                         <li style="color: #262a31;" onclick="toggleSub(this)">
-                                            {{ category.name }}
+                                            <a style="color: black;" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
                                             <i class="fa-solid fa-chevron-down"></i>
                                         </li>
+
                                         {% if category.children.exists %}
 
                                         <ul class="sub-category">
