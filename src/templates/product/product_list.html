@@ -100,7 +100,7 @@
 				{% for category in similar_categories %}
 					<a href="{{ category.get_absolute_url }}">
 						<div class="category">
-							<img src="{% if category.image %}{{ category.image.url }}{% else %}{% static 'images/tech/default.jpg' %}{% endif %}" 
+							<img style="border-radius: 10px;" src="{% if category.image %}{{ category.image.url }}{% else %}{% static 'images/tech/default.jpg' %}{% endif %}" 
 								 alt="{{ category.name }}" />
 							<span>{{ category.name }}</span>
 						</div>
