@@ -208,21 +208,25 @@
                 <div class="w-100">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal">
                         <div class="card card-grid-lg card-element-hover card-overlay-hover overflow-hidden" 
-                             style="height: 200px; background-image:url('{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}'); 
-                             background-position: center left; background-size: cover;">
+                             style="height: 200px; background-image: url('{% if service.image %}{{ service.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}'); 
+                             background-position: center; background-size: cover;">
                             <div class="hover-element position-absolute w-100 h-100">
                                 <i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
                             </div>
                         </div>
                     </a>
                     
-                    <!-- Модальное окно -->
+                    <!-- Модальное окно (Попап) -->
                     <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{ product.name|slice:":20" }}{% if product.name|length > 20 %}...{% endif %}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                </div>
                                 <div class="modal-body text-center">
-                                    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}" 
-                                         class="img-fluid" alt="Product Image">
+                                    <img src="{% if service.image %}{{ service.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}" 
+                                         alt="Изображение" class="img-fluid">
                                 </div>
                             </div>
                         </div>
@@ -257,7 +261,7 @@
     
     
                                 <p class="mb-3"> {{ product.name }} поставляется со складов по всему Казахстану.
-                                    <br><br>Позвоните нам по телефону <a type='tel' href='tel: +7 (747) 562 05 16'><b style="color: #032655;">+7 (747) 562 05 16 </b></a>, напишите нам на почту zakaz@steelfed.kz или оставьте заявку на сайте.
+                                    <br><br>Позвоните нам по телефону <a type='tel' href='tel: +7 (747) 562 05 16'><b style="color: black;">+7 (747) 562 05 16 </b></a>, напишите нам на почту zakaz@steelfed.kz или оставьте заявку на сайте. 
                                 </p>
 
                                 <p class="mb-0">ТОО «Stalfed»– ваш надежный поставщик металла.</p>
@@ -279,36 +283,32 @@
     
                                 <ol class="list-group list-group-numbered">
                                     <li class="list-group-item border-0 ps-0">
-                                        <b>Прямые контракты</b> с ведущими производителями металла и локальными поставщиками.
+                                        <b style="color: black;">Прямые контракты</b> с ведущими производителями металла и локальными поставщиками.
                                     </li>
                                     <li class="list-group-item border-0 ps-0">
-                                        <b>Конкурентные цены</b> благодаря высоким объемам закупок.
+                                        <b style="color: black;">Конкурентные цены</b> благодаря высоким объемам закупок.
                                     </li>
                                     <li class="list-group-item border-0 ps-0">
-                                        Более <b>5 миллионов</b> позиций в ассортименте, быстрый подбор под любые задачи.
+                                        Более <b style="color: black;">5 миллионов</b> позиций в ассортименте, быстрый подбор под любые задачи.
                                     </li>
                                     <li class="list-group-item border-0 ps-0">
-                                        <b>Сертифицированная продукция</b>, соответствующая всем отраслевым стандартам.
+                                        <b style="color: black;">Сертифицированная продукция</b>, соответствующая всем отраслевым стандартам.
                                     </li>
                                     <li class="list-group-item border-0 ps-0">
-                                        Быстрая обработка заказов – <b>отклик в течение часа</b>.
+                                        Быстрая обработка заказов – <b style="color: black;">отклик в течение часа</b>.
                                     </li>
                                     <li class="list-group-item border-0 ps-0">
-                                        <b>Эксперты</b> в области металлопроката помогут подобрать оптимальное решение.
+                                        <b style="color: black;">Эксперты</b> в области металлопроката помогут подобрать оптимальное решение.
                                     </li>
                                     <li class="list-group-item border-0 ps-0">
-                                        <b>Склады</b> в ключевых городах Казахстана и Узбекистана.
+                                        <b style="color: black;">Склады</b> в ключевых городах Казахстана и Узбекистана.
                                     </li>
                                     <li class="list-group-item border-0 ps-0">
-                                        <b>Надежная логистика</b> – партнерство с крупными транспортными компаниями.
+                                        <b style="color: black;">Надежная логистика</b> – партнерство с крупными транспортными компаниями.
                                     </li>
                                 </ol>
 
-                                <style>
-                                    li {
-                                        margin-bottom: 10px;
-                                    }
-                                </style>
+                                
 
                                 <div class="container">
                                     <div class="product-content__block" id="delivery">

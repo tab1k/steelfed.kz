@@ -18,9 +18,86 @@
                     <div class="d-lg-flex justify-content-lg-between mb-1">
                         <!-- Title -->
                         <div class="mb-2 mb-lg-0">
+
+                            <div class="bread-crumbs">
+                                <div class="">
+                                    <ul class="bread-crumbs__list" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+                                        
+                                        
+                                        <li class="bread-crumbs__item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                                            <a class="bread-crumbs__link" href="/" itemprop="item">
+                                                  <span itemprop="name">
+                                                      Главная
+                                                  </span>
+                                            </a>
+                                            <meta itemprop="position" content="1">
+                                        </li>
+                
+                                        <li class="bread-crumbs__item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                                            <a class="bread-crumbs__link" href="{% url 'main:services' %}" itemprop="item">
+                                                  <span itemprop="name">
+                                                      Услуги
+                                                  </span>
+                                            </a>
+                                            <meta itemprop="position" content="1">
+                                        </li>
+                                    
+                                        
+                                        <li class="bread-crumbs__item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                                            <a class="bread-crumbs__link" href="{{ service.get_absolute_url }}" itemprop="item">
+                                                  <span itemprop="name">
+                                                    {{ service.name.upper }}
+                                                  </span>
+                                            </a>
+                                            <meta itemprop="position" content="2">
+                                        </li>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                
+                            <style>
+                                .bread-crumbs__list {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    margin: 0;
+                                
+                                    margin-bottom: 8px;
+                                    padding: 0;
+                                    list-style-type: none;
+                                }
+                                .bread-crumbs__item {
+                                    display: flex;
+                                    align-items: center;
+                                    margin-bottom: 8px;
+                                }
+                                .bread-crumbs__link {
+                                    color: #999;
+                                    font-weight: 700;
+                                    font-size: 12px;
+                                    text-transform: uppercase;
+                                    letter-spacing: .01em;
+                                }
+                
+                                .bread-crumbs__item::after {
+                                    content: url('{% static 'images/tech/rigth.svg' %}');
+                                    display: flex;
+                                    align-items: center;
+                                    margin: 0 9px;
+                                    width: 7px;
+                                    height: 10px;
+                                    color: #d3d6db;
+                                }
+                            </style>
+
                             <h1 class="fs-2">{{ service.name.upper }} </h1>
                             <!-- Location -->
-                            <p class="fw-bold mb-0"><i class="bi bi-geo-alt me-2"></i>Казахстан, г.Алматы
+                            <p class="fw-bold mb-0"><i class="bi bi-geo-alt me-2"></i>Казахстан, г.Алматы, Райымбека 251Г
                                 
                             </p>
                         </div>
@@ -28,19 +105,52 @@
                         <!-- Buttons -->
                         <ul class="list-inline text-end">
                             <!-- Share icon -->
-                            <li class="list-inline-item dropdown">
-                                <!-- Share button -->
-                                <a href="#" class="btn btn-sm btn-light px-2" role="button" id="dropdownShare" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-fw fa-share-alt"></i>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <a class="link-back d-lg-none me-3" href="{% url  'main:services' %}">
+                                    Назад
                                 </a>
-                                <!-- Dropdown button -->
-                                <ul class="dropdown-menu dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare">
-                                    <li><a class="dropdown-item" href="#" id="share-facebook"><i class="fab fa-facebook-square me-2"></i>Facebook</a></li>
-                                    <li><a class="dropdown-item" href="#" id="share-whatsapp"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a></li>
-                                    <li><a class="dropdown-item" href="#" id="share-telegram"><i class="fab fa-telegram me-2"></i>Telegram</a></li>
-                                    <li><a class="dropdown-item" href="#" id="copy-link"><i class="fa-solid fa-copy me-2"></i>Копировать</a></li>
-                                </ul>
-                            </li>
+                            
+                                <li class="list-inline-item dropdown">
+                                    <a href="#" class="btn btn-sm btn-light px-2 mb-0"  role="button" id="dropdownShare" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-fw fa-share-alt"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end min-w-auto shadow rounded" aria-labelledby="dropdownShare">
+                                        <li><a class="dropdown-item" href="#" id="share-facebook"><i class="fab fa-facebook-square me-2"></i>Facebook</a></li>
+                                        <li><a class="dropdown-item" href="#" id="share-whatsapp"><i class="fab fa-whatsapp me-2"></i>WhatsApp</a></li>
+                                        <li><a class="dropdown-item" href="#" id="share-telegram"><i class="fab fa-telegram me-2"></i>Telegram</a></li>
+                                        <li><a class="dropdown-item" href="#" id="copy-link"><i class="fa-solid fa-copy me-2"></i>Копировать</a></li>
+                                    </ul>
+                                </li>
+                            </div>
+
+                            <style>
+                                .link-back {
+                                display: inline-flex;
+                                align-items: center;
+                           
+                                padding: 8px 8px 6px;
+                                padding-left: 28px;
+                                color: #262a31;
+                                font-weight: 700;
+                                font-size: 12px;
+                                letter-spacing: .01em;
+                                text-transform: uppercase;
+                                background-color: #f5f7f8;
+                                border-radius: 8px;
+                                position: relative;
+                                line-height: 13px;
+                                }
+                                .link-back:before {
+                                    content: "";
+                                    position: absolute;
+                                    transform: translateY(-50%);
+                                    top: 50%;
+                                    left: 8px;
+                                    width: 16px;
+                                    height: 16px;
+                                    background: url('{% static 'images/tech/arrow-left.svg' %}');
+                                }
+                            </style>
                             
                             <script>
                                 document.addEventListener("DOMContentLoaded", function () {
@@ -83,16 +193,31 @@
             <div class="row g-2">
                 <!-- Image -->
                 <div class="w-100">
-                    <a data-glightbox="" data-gallery="gallery" href="{% if service.image %}{{ service.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal">
                         <div class="card card-grid-lg card-element-hover card-overlay-hover overflow-hidden" 
-                             style="height: 200px; background-image:url('{% if service.image %}{{ service.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}'); 
-                             background-position: center left; background-size: cover;">
-                            <!-- Card hover element -->
+                             style="height: 200px; background-image: url('{% if service.image %}{{ service.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}'); 
+                             background-position: center; background-size: cover;">
                             <div class="hover-element position-absolute w-100 h-100">
                                 <i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
                             </div>
                         </div>
                     </a>
+                    
+                    <!-- Модальное окно (Попап) -->
+                    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{ service.name|slice:":20" }}{% if service.name|length > 20 %}...{% endif %}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <img src="{% if service.image %}{{ service.image.url }}{% else %}{% static 'images/tech/cartinka.jpg' %}{% endif %}" 
+                                         alt="Изображение" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
