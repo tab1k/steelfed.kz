@@ -27,6 +27,15 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse('main:category_detail', kwargs={'slug': self.slug})
+    
+    
+    def get_ancestors(self):
+        category = self
+        ancestors = []
+        while category:
+            ancestors.insert(0, category)
+            category = category.parent
+        return ancestors
 
 
 class Product(models.Model):
@@ -45,6 +54,10 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
+        
+        indexes = [
+            models.Index(fields=['category']),
+        ]
 
     def __str__(self):
         return self.name

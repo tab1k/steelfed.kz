@@ -21,43 +21,36 @@
                         <div class="mb-2 mb-lg-0">
                             <div class="bread-crumbs">
                                 <div class="">
-                                    <ul class="bread-crumbs__list" itemscope="" itemtype="https://schema.org/BreadcrumbList">
-                                        
-                                        
-                                        <li class="bread-crumbs__item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+                                    <ul class="bread-crumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+                                        <li class="bread-crumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
                                             <a class="bread-crumbs__link" href="/" itemprop="item">
-                                                  <span itemprop="name">
-                                                      Главная
-                                                  </span>
-                                            </a>
-                                            <meta itemprop="position" content="1">
-                                        </li>
-                
-                                        <li class="bread-crumbs__item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
-                                            <a class="bread-crumbs__link" href="{% url 'main:category' %}" itemprop="item">
-                                                  <span itemprop="name">
-                                                      Каталог
-                                                  </span>
+                                                <span itemprop="name">Главная</span>
                                             </a>
                                             <meta itemprop="position" content="1">
                                         </li>
                                     
-                                        
-                                        <li class="bread-crumbs__item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
-                                            <a class="bread-crumbs__link" href="{{ product.get_absolute_url }}" itemprop="item">
-                                                  <span itemprop="name">
-                                                    {{ product.name.upper }}
-                                                  </span>
+                                        <li class="bread-crumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                                            <a class="bread-crumbs__link" href="{% url 'main:category' %}" itemprop="item">
+                                                <span itemprop="name">Каталог</span>
                                             </a>
                                             <meta itemprop="position" content="2">
                                         </li>
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
+                                    
+                                        {% for cat in category_ancestors %}
+                                            <li class="bread-crumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                                                <a class="bread-crumbs__link" href="{{ cat.get_absolute_url }}" itemprop="item">
+                                                    <span itemprop="name">{{ cat.name }}</span>
+                                                </a>
+                                                <meta itemprop="position" content="{{ forloop.counter0|add:3 }}">
+                                            </li>
+                                        {% endfor %}
+                                    
+                                        <li class="bread-crumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                                            <span class="bread-crumbs__link" itemprop="name">{{ product.name }}</span>
+                                            <meta itemprop="position" content="{{ category_ancestors|length|add:3 }}">
+                                        </li>
                                     </ul>
+                                    
                                 </div>
                             </div>
                 

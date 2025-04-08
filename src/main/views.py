@@ -1,22 +1,22 @@
-from django.db.models import Prefetch
-from django.views import View
-from django.views.generic import TemplateView
-from .models import *
-from django.shortcuts import redirect
-from django.http import JsonResponse
-from django.views.generic import DetailView, ListView
+from datetime import datetime
+import random
+import re
+from collections import defaultdict
+
+from django.core.cache import cache
 from django.core.paginator import Paginator
+from django.db.models import Q, Prefetch, Count
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string
-from django.views.generic import TemplateView
-from django.views.generic import ListView
-from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views import View
+from django.views.generic import TemplateView, ListView, DetailView
 from django_filters.views import FilterView
+
 from .models import Product, Category, Service
 from .filters import ProductFilter
-import re
-from django.views.generic import DetailView
-from django.views.generic import TemplateView
 
 
         
@@ -26,12 +26,25 @@ class IndexPageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['services'] = Service.objects.only('name', 'image')
-        # Передаем категории и их продукты
+        
+        # Передаем категории и их продукты (оптимизировано)
         context['categories'] = (
             Category.objects.filter(parent__isnull=True)
             .order_by('id')
-            .prefetch_related('children__children__children', 'products')  # Предзагрузка продуктов
+            .prefetch_related('children', 'children__products')
         )
+
+        # Попробуем получить случайные товары из кеша
+        random_products = cache.get('random_products')
+        
+        if not random_products:
+            # Получаем 5 случайных товаров с использованием SQL
+            random_products = Product.objects.order_by('?')[:5]
+
+            # Кешируем случайные товары на 24 часа
+            cache.set('random_products', random_products, timeout=86400)  # timeout = 86400 секунд (24 часа)
+
+        context['random_products'] = random_products
         return context
     
     
@@ -130,41 +143,84 @@ class ServicesDetailView(DetailView):
     context_object_name = 'service'
 
 
+
 class CategoryDetailView(DetailView):
     model = Category
     template_name = 'category/category_detail.html'
     context_object_name = 'category'
 
+    @method_decorator(cache_page(60 * 15))  # Кэшируем страницу на 15 минут
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get_queryset(self):
-        # Загружаем связанные данные только один раз
         return Category.objects.prefetch_related(
-            'children',  # Предзагрузка подкатегорий
-            'products'  # Предзагрузка продуктов
-        ).select_related('parent').order_by('id')  # Сохраняем порядок категорий
+            'children',
+            'products'  # Используем prefetch_related для множественных связей
+        ).select_related('parent').order_by('id')
 
     def get(self, request, *args, **kwargs):
-        # Получение текущего объекта категории
         self.object = self.get_object()
 
-        # Проверка: если подкатегорий нет, перенаправить на страницу списка продуктов
+        # Редиректим, если нет потомков
         if not self.object.children.exists():
             return redirect('main:product_list', slug=self.object.slug)
 
-        # Если подкатегории существуют, отображаем стандартный шаблон
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        category = self.get_object()
+        category = self.object
+        
+        subcategories = category.children.all()
 
-        # Проверим содержимое продуктов для категории
-        context['products'] = category.products.all()
-        print(context['products'])  # Выведет список продуктов в консоль, если это нужно
+        # Получаем все категории
+        all_categories = Category.objects.only('id', 'parent_id')
 
-        context['categories'] = Category.objects.filter(
-            parent__isnull=True
-        ).order_by('id').only('id', 'name')
+        # Строим дерево в памяти с использованием defaultdict
+        children_map = defaultdict(list)
+        for cat in all_categories:
+            children_map[cat.parent_id].append(cat.id)
 
+        # Собираем все id категорий и их потомков
+        category_ids = set()
+        stack = [category.id]
+
+        while stack:
+            current_id = stack.pop()
+            category_ids.add(current_id)
+            stack.extend(children_map.get(current_id, []))
+
+        # Используем кэш для списка продуктов
+        cache_key = f'category_{category.id}_products'
+        products = cache.get(cache_key)
+
+        if not products:
+            # Получаем продукты одним запросом по всем нужным категориям и сортируем их случайным образом
+            products = Product.objects.filter(category_id__in=category_ids).select_related('category').distinct()
+            products = products.order_by('?')  # Сортируем случайным образом
+
+            # Кэшируем результат на 15 минут
+            cache.set(cache_key, products, timeout=60 * 15)
+
+        # Пагинация
+        paginator = Paginator(products, 15)
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        # Получаем количество продуктов через пагинатор
+        total_products = page_obj.paginator.count
+
+        # Главные категории для меню
+        top_categories = Category.objects.filter(parent__isnull=True).only('id', 'name')
+
+        # Передаем данные в шаблон
+        context.update({
+            'page_obj': page_obj,
+            'categories': top_categories,
+            'total_products': total_products,
+            'subcategories': subcategories,
+        })
         return context
 
 
@@ -218,8 +274,8 @@ class ProductListView(FilterView, ListView):
 
         context['page_range'] = page_range
         context['current_page'] = current_page
+        context['ancestors'] = category.get_ancestors()
         return context
-
 
 
 class ProductDetailView(DetailView):
@@ -229,22 +285,25 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        product = self.object  # Сохраняем объект, чтобы не делать повторные запросы к БД
+        product = self.object
+
+        # Распарсенные данные из названия
         context['parsed_data'] = self.parse_product_name(product.name)
+
+        # Категория товара
+        category = product.category
+        context['category'] = category
+
+        # Получаем цепочку родительских категорий
+        context['category_ancestors'] = category.get_ancestors()
+
         return context
 
     @staticmethod
     def parse_product_name(product_name):
-        # Извлекаем толщину стенки
         thickness = next(iter(re.findall(r"(\d+(\.\d+)?)\s*мм", product_name)), ("Не указано",))[0] + " мм"
-
-        # Извлекаем марку стали
         mark = next(iter(re.findall(r"(Ст\d+[пс|кп]?)", product_name)), "Не указано")
-
-        # Извлекаем ГОСТ
         gost = next(iter(re.findall(r"(ГОСТ\s*\d+-\d+)", product_name)), "Не указано")
-
-        # Определяем тип проката
         product_type = "горячекатаная" if "горячекатаная" in product_name else \
                        "холоднокатаная" if "холоднокатаная" in product_name else "Не указано"
 

@@ -72,7 +72,22 @@
                   grid-column: span 3;
               }
           }
-      </style>
+
+          .grid-item {
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            }
+            
+            .grid-item:hover {
+                transform: scale(1.05); /* Небольшой зум */
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Лёгкая тень при наведении */
+                z-index: 2; /* Чтобы не перекрывался другими блоками */
+            }
+        
+        </style>
+
       <div class="container mt-3 mb-5">
         <h4 class=" mb-3" style="color: #262a31;">Каталог</h4>
         <div class="grid">
@@ -83,11 +98,14 @@
                 </div>
               </a>
             {% endfor %}
-
-            
-            
         </div>
       </div>
+
+      
+
+      
+
+      
     
   
       <!-- КОНЕЦ КАТЕГОРИЙ-->
